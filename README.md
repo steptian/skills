@@ -74,4 +74,4 @@ skills/
 
 ## 开发规范
 
-详见 CLAUDE.md（项目内）。
+详见 [CLAUDE.md](./CLAUDE.md)。
