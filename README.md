@@ -71,9 +71,5 @@ skills/
 │   ├── SKILL.md
 │   ├── reference.md
 │   └── examples.md
-└── CLAUDE.md            # 开发规范（本地）
+└── README.md
 ```
-
-## 开发规范
-
-详见 [CLAUDE.md](./CLAUDE.md)。
