@@ -1,7 +1,7 @@
 ---
 name: know-keep
-description: "从对话或项目中提取可复用知识并持久化存储。触发词：'记一下'、'记住这个'、'这个很重要'、'以后都这样'、'沉淀知识'、'提取干货'、'保存经验'、'归纳一下'、'同步到flomo'。支持对话提取、规则归纳、知识同步、会话快照、flomo同步等模式。"
-argument-hint: [--chat] [--归纳] [--sync] [--snapshot] [--flomo] [--compress] [-c 类别]
+description: "从对话或项目中提取可复用知识并持久化存储。触发词：'记一下'、'记住这个'、'这个很重要'、'以后都这样'、'沉淀知识'、'提取干货'、'保存经验'、'归纳一下'、'同步到flomo'、'从文件夹提取'。支持对话提取、文件夹扫描、规则归纳、知识同步、会话快照、flomo同步等模式。"
+argument-hint: [--chat] [--归纳] [--sync] [--snapshot] [--flomo] [--compress] [--from-dir 路径] [-c 类别]
 model: sonnet
 user-invocable: true
 allowed-tools: Read, Write, Edit, Glob, Grep, Bash(find *, wc, curl *)
@@ -14,13 +14,14 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash(find *, wc, curl *)
 ## 快速开始
 
 ```bash
-/know-keep              # 扫描项目文档提取知识
-/know-keep --chat       # 从当前对话提取（推荐日常使用）
-/know-keep --归纳       # 将同类知识归纳为通用规则
-/know-keep --sync       # 审查知识库，沉淀到 CLAUDE.md
-/know-keep --snapshot   # 保存关键决策快照
-/know-keep --flomo      # 同步核心知识到 flomo（#claude #know-keep）
-/know-keep --compress   # 压缩整理知识库
+/know-keep                      # 扫描项目文档提取知识
+/know-keep --chat               # 从当前对话提取（推荐日常使用）
+/know-keep --from-dir ~/notes   # 从指定文件夹提取并归纳
+/know-keep --归纳               # 将同类知识归纳为通用规则
+/know-keep --sync               # 审查知识库，沉淀到 CLAUDE.md
+/know-keep --snapshot           # 保存关键决策快照
+/know-keep --flomo              # 同步核心知识到 flomo
+/know-keep --compress           # 压缩整理知识库
 ```
 
 ## 存储结构
@@ -80,7 +81,7 @@ flomo_api: https://flomoapp.com/iwh/xxx/  # API 地址，保密
 
 ## 执行流程
 
-1. **检测模式**: --chat / --归纳 / --sync / --snapshot / --flomo / --compress / 默认扫描
+1. **检测模式**: --chat / --from-dir / --归纳 / --sync / --snapshot / --flomo / --compress / 默认扫描
 2. **提取知识**: 按标准筛选和抽象
 3. **风险检测**: 覆盖/删除操作需确认
 4. **写入存储**: 更新 index.yaml 和对应文件
@@ -102,6 +103,31 @@ flomo_api: https://flomoapp.com/iwh/xxx/  # API 地址，保密
 ```
 
 **安全**: API 地址存储在 `~/.kb/config.yaml`，不会被 git 追踪
+
+## 文件夹提取 (--from-dir)
+
+从指定文件夹的文本文件中提取知识并归纳总结
+
+**支持文件**: `.md`, `.txt`, `.rst`, `.org`, `.html`, `.htm`
+
+**HTML 处理**: 直接读取本地文件，解析 HTML 结构提取正文，不依赖 MCP 工具
+
+**流程**:
+1. 扫描文件夹，识别文本文件
+2. 读取文件内容，提取可复用知识
+3. 归纳总结，合并同类知识
+4. 写入知识库，标注来源
+
+**使用场景**:
+- 从笔记文件夹批量提取知识
+- 从项目文档沉淀通用经验
+- 从会议记录提取决策要点
+
+**示例**:
+```bash
+/know-keep --from-dir ~/Documents/notes
+/know-keep --from-dir ./docs
+```
 
 ## 高风险审核
 
