@@ -80,7 +80,48 @@ context: 国内网络环境需要代理访问
 /know-keep --snapshot --query "ai-news"
 ```
 
-### 4. 知识同步模式 (--sync)
+### 4. Flomo 同步模式 (--flomo)
+
+**适用场景**: 将核心知识同步到 flomo，便于碎片化回顾
+
+**核心价值**: 知识库 + flomo 双轨沉淀，flomo 做轻量回顾
+
+**筛选标准**: 仅同步重要性 ⭐⭐⭐ 的核心知识
+
+**执行流程**:
+1. 读取 `~/.kb/config.yaml` 获取 flomo API 地址
+2. 扫描所有知识文件，筛选 ⭐⭐⭐ 条目
+3. 格式化为 flomo 格式（自动添加标签）
+4. 通过 API 发送到 flomo
+
+**Flomo 格式**:
+```
+[知识标题] - 一句话原则 #claude #know-keep
+
+[可选：关键要点或示例]
+```
+
+**API 调用**:
+```bash
+curl -X POST "$FLOMO_API" \
+  -H "Content-Type: application/json" \
+  -d '{"content": "知识内容 #claude #know-keep"}'
+```
+
+**安全措施**:
+- API 地址存储在 `~/.kb/config.yaml`（不被 git 追踪）
+- 每日限制 100 条（flomo API 限制）
+- 同步前显示预览，确认后发送
+
+**配置方式**:
+```yaml
+# ~/.kb/config.yaml
+storage_path: ~/.kb
+created: 2026-02-27
+flomo_api: https://flomoapp.com/iwh/xxx/xxx/
+```
+
+### 5. 知识同步模式 (--sync)
 
 **目标**: 将高频知识沉淀到 `~/.claude/CLAUDE.md`
 
@@ -182,6 +223,7 @@ context: 国内网络环境需要代理访问
 | --chat 提取 | 500-2000 |
 | --归纳 归纳 | 1000-3000 |
 | --snapshot 快照 | 300-800 |
+| --flomo 同步 | 500-1000 |
 | 项目扫描 | 2000-10000 |
 | --sync 审查 | 1000-3000 |
 | --compress | 500-1500 |

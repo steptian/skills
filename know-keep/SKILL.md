@@ -1,10 +1,10 @@
 ---
 name: know-keep
-description: "从对话或项目中提取可复用知识并持久化存储。触发词：'记一下'、'记住这个'、'这个很重要'、'以后都这样'、'沉淀知识'、'提取干货'、'保存经验'、'归纳一下'。支持对话提取、规则归纳、知识同步、会话快照等模式。"
-argument-hint: [--chat] [--归纳] [--sync] [--snapshot] [--compress] [-c 类别]
+description: "从对话或项目中提取可复用知识并持久化存储。触发词：'记一下'、'记住这个'、'这个很重要'、'以后都这样'、'沉淀知识'、'提取干货'、'保存经验'、'归纳一下'、'同步到flomo'。支持对话提取、规则归纳、知识同步、会话快照、flomo同步等模式。"
+argument-hint: [--chat] [--归纳] [--sync] [--snapshot] [--flomo] [--compress] [-c 类别]
 model: sonnet
 user-invocable: true
-allowed-tools: Read, Write, Edit, Glob, Grep, Bash(find *, wc)
+allowed-tools: Read, Write, Edit, Glob, Grep, Bash(find *, wc, curl *)
 ---
 
 # know-keep - 知识提取器
@@ -19,6 +19,7 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash(find *, wc)
 /know-keep --归纳       # 将同类知识归纳为通用规则
 /know-keep --sync       # 审查知识库，沉淀到 CLAUDE.md
 /know-keep --snapshot   # 保存关键决策快照
+/know-keep --flomo      # 同步核心知识到 flomo（#claude #know-keep）
 /know-keep --compress   # 压缩整理知识库
 ```
 
@@ -26,7 +27,7 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash(find *, wc)
 
 ```
 ~/.kb/                    # 默认路径，首次运行可配置
-├── config.yaml           # 配置
+├── config.yaml           # 配置（含 flomo_api，勿泄露）
 ├── index.yaml            # L0 索引（<50 tokens）
 ├── <category>.md         # L1 摘要
 ├── detail/               # L2 详情
@@ -37,6 +38,7 @@ allowed-tools: Read, Write, Edit, Glob, Grep, Bash(find *, wc)
 ```yaml
 storage_path: ~/.kb
 created: 2026-02-27
+flomo_api: https://flomoapp.com/iwh/xxx/  # API 地址，保密
 ```
 
 ## 知识分层
@@ -78,13 +80,28 @@ created: 2026-02-27
 
 ## 执行流程
 
-1. **检测模式**: --chat / --归纳 / --sync / --snapshot / --compress / 默认扫描
+1. **检测模式**: --chat / --归纳 / --sync / --snapshot / --flomo / --compress / 默认扫描
 2. **提取知识**: 按标准筛选和抽象
 3. **风险检测**: 覆盖/删除操作需确认
 4. **写入存储**: 更新 index.yaml 和对应文件
 5. **输出报告**: 统计新增/合并/归纳条目
 
 详细流程请参考 [reference.md](./reference.md)，示例输出见 [examples.md](./examples.md)。
+
+## Flomo 同步 (--flomo)
+
+将核心知识（⭐⭐⭐）同步到 flomo，自动添加标签 `#claude #know-keep`
+
+**筛选标准**: 仅同步重要性 ⭐⭐⭐ 的知识
+
+**格式**:
+```
+[知识标题] - 一句话原则 #claude #know-keep
+
+[可选：详细说明]
+```
+
+**安全**: API 地址存储在 `~/.kb/config.yaml`，不会被 git 追踪
 
 ## 高风险审核
 
