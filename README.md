@@ -66,6 +66,62 @@
 
 ---
 
+### task-notify — 任务完成提醒
+
+> **类比**：Claude 完成长任务后的"闹钟"，语音 + 通知双保险
+
+**你是否有这些困扰？**
+
+| 场景 | task-notify 如何解决 |
+|------|---------------------|
+| ⏳ 长任务执行时走神去刷手机 | 语音播报 + 系统通知，想 miss 都难 |
+| 🔔 终端通知经常被系统静默 | 使用 `terminal-notifier`，确保通知弹出 |
+| 📋 不知道具体完成了什么 | 动态标题显示任务名、阶段、耗时 |
+
+**快速开始**：
+```bash
+/notify                  # 发送默认通知
+/notify 部署完成         # 自定义消息
+```
+
+**触发方式**（无需命令）：
+> "任务完成后提醒我"
+>
+> "好了叫我一声"
+
+**核心能力**：
+- 语音播报（macOS `say` 命令）
+- 系统通知（`terminal-notifier`）
+- 动态标题（从上下文提取任务名）
+
+---
+
+### build-agent-team — Agent Team 构建框架
+
+> **类比**：多 Agent 协作的"项目经理"，标准化团队创建流程
+
+**适用场景**：
+
+| 场景 | 说明 |
+|------|------|
+| 🔀 并行模块化开发 | 前端 + 后端 + 数据库 + 测试，无重叠编辑 |
+| 🔍 多维度评审 | 安全 + 性能 + 可维护性 + 测试覆盖 |
+| 🐛 竞争性调试 | 多个互斥假设并行验证 |
+| 🔗 跨层协同 | 端到端变更，职责边界清晰 |
+
+**快速开始**：
+```bash
+/build-agent-team 构建 Node.js 用户管理 CLI，包含 CRUD、权限控制
+```
+
+**核心能力**：
+- 角色映射（前端/后端/测试/架构师...）
+- 文件所有权规则（零冲突保证）
+- 质量门禁（测试覆盖 / 安全扫描）
+- 完成通知（项目名 + 阶段 + 耗时）
+
+---
+
 ## 安装
 
 ```bash
@@ -77,6 +133,8 @@ done
 # 或单独安装
 ln -sf $(pwd)/daily-plan ~/.claude/skills/daily-plan
 ln -sf $(pwd)/know-keep ~/.claude/skills/know-keep
+ln -sf $(pwd)/task-notify ~/.claude/skills/task-notify
+ln -sf $(pwd)/build-agent-team ~/.claude/skills/build-agent-team
 ```
 
 ## 目录结构
@@ -91,5 +149,10 @@ skills/
 │   ├── SKILL.md
 │   ├── reference.md
 │   └── examples.md
+├── task-notify/         # 任务完成提醒
+│   └── SKILL.md
+├── build-agent-team/    # Agent Team 构建框架
+│   ├── SKILL.md
+│   └── learning_system/ # 团队模板学习模块
 └── README.md
 ```

@@ -1,0 +1,1075 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - link "ClawHub" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img [ref=e7]
+        - generic [ref=e8]: ClawHub
+      - navigation [ref=e9]:
+        - link "Skills" [ref=e10] [cursor=pointer]:
+          - /url: /skills
+        - link "Upload" [ref=e11] [cursor=pointer]:
+          - /url: /upload
+        - link "Import" [ref=e12] [cursor=pointer]:
+          - /url: /import
+        - link "Search" [ref=e13] [cursor=pointer]:
+          - /url: /skills?focus=search
+      - generic [ref=e14]:
+        - group "Theme mode" [ref=e16]:
+          - radio "System theme" [checked] [ref=e17]:
+            - img [ref=e18]
+            - generic [ref=e20]: System
+          - radio "Light theme" [ref=e21]:
+            - img [ref=e22]
+            - generic [ref=e28]: Light
+          - radio "Dark theme" [ref=e29]:
+            - img [ref=e30]
+            - generic [ref=e32]: Dark
+        - button "Sign in with GitHub" [ref=e33]:
+          - generic [ref=e34]: Sign in
+          - generic [ref=e35]: with GitHub
+  - main [ref=e36]:
+    - generic [ref=e37]:
+      - generic [ref=e38]:
+        - generic [ref=e40]:
+          - generic [ref=e41]:
+            - heading "self-improving-agent" [level=1] [ref=e43]
+            - paragraph [ref=e44]: "Captures learnings, errors, and corrections to enable continuous improvement. Use when: (1) A command or operation fails unexpectedly, (2) User corrects Clau..."
+            - generic [ref=e45]:
+              - text: ⭐ 1.1k ·
+              - img [ref=e46]
+              - text: 88.3k · 958 current installs · 987 all-time installs
+            - generic [ref=e51]:
+              - generic [ref=e52]: by
+              - link "@pskoett" [ref=e54] [cursor=pointer]:
+                - /url: /u/pskoett
+            - generic [ref=e55]:
+              - generic [ref=e56]: Security Scan
+              - generic [ref=e57]:
+                - generic [ref=e58]:
+                  - generic [ref=e59]:
+                    - img "VirusTotal" [ref=e60]
+                    - generic [ref=e62]: VirusTotal
+                  - generic [ref=e63]: Benign
+                  - link "View report →" [ref=e64] [cursor=pointer]:
+                    - /url: https://www.virustotal.com/gui/file/eaa2f3b866770ad160c867c5826ef33cbb4dd9d4db7c2c5c06ae4672217eddb2
+                - generic [ref=e65]:
+                  - generic [ref=e66]:
+                    - img "OpenClaw" [ref=e67]
+                    - generic [ref=e71]: OpenClaw
+                  - generic [ref=e72]: Benign
+                  - generic [ref=e73]: high confidence
+                - button "The skill's code, hooks, and instructions are coherent with its stated purpose (capturing learnings and reminders) and do not request unrelated credentials or external installs, but review/opt-in activation is advised because some hooks read tool output and writing/promoting learnings can persist sensitive data. Details ▾" [ref=e75] [cursor=pointer]:
+                  - generic [ref=e76]: The skill's code, hooks, and instructions are coherent with its stated purpose (capturing learnings and reminders) and do not request unrelated credentials or external installs, but review/opt-in activation is advised because some hooks read tool output and writing/promoting learnings can persist sensitive data.
+                  - generic [ref=e77]:
+                    - text: Details
+                    - generic [ref=e78]: ▾
+            - paragraph [ref=e79]: Like a lobster shell, security has layers — review code before you run it.
+          - generic [ref=e80]:
+            - generic [ref=e81]:
+              - generic [ref=e82]: Current version
+              - strong [ref=e83]: v1.0.11
+            - link "Download zip" [ref=e84] [cursor=pointer]:
+              - /url: https://wry-manatee-359.convex.site/api/v1/download?slug=self-improving-agent
+        - generic [ref=e86]:
+          - text: latest
+          - generic [ref=e87]: v1.0.11
+      - generic [ref=e88]:
+        - generic [ref=e89]:
+          - button "Files" [ref=e90] [cursor=pointer]
+          - button "Compare" [ref=e91] [cursor=pointer]
+          - button "Versions" [ref=e92] [cursor=pointer]
+        - generic [ref=e93]:
+          - generic [ref=e94]:
+            - heading "SKILL.md" [level=2] [ref=e95]
+            - generic [ref=e96]:
+              - heading "Self-Improvement Skill" [level=1] [ref=e97]
+              - paragraph [ref=e98]: Log learnings and errors to markdown files for continuous improvement. Coding agents can later process these into fixes, and important learnings get promoted to project memory.
+              - heading "Quick Reference" [level=2] [ref=e99]
+              - table [ref=e100]:
+                - rowgroup [ref=e101]:
+                  - row "Situation Action" [ref=e102]:
+                    - columnheader "Situation" [ref=e103]
+                    - columnheader "Action" [ref=e104]
+                - rowgroup [ref=e105]:
+                  - row "Command/operation fails Log to .learnings/ERRORS.md" [ref=e106]:
+                    - cell "Command/operation fails" [ref=e107]
+                    - cell "Log to .learnings/ERRORS.md" [ref=e108]:
+                      - text: Log to
+                      - code [ref=e109]: .learnings/ERRORS.md
+                  - row "User corrects you Log to .learnings/LEARNINGS.md with category correction" [ref=e110]:
+                    - cell "User corrects you" [ref=e111]
+                    - cell "Log to .learnings/LEARNINGS.md with category correction" [ref=e112]:
+                      - text: Log to
+                      - code [ref=e113]: .learnings/LEARNINGS.md
+                      - text: with category
+                      - code [ref=e114]: correction
+                  - row "User wants missing feature Log to .learnings/FEATURE_REQUESTS.md" [ref=e115]:
+                    - cell "User wants missing feature" [ref=e116]
+                    - cell "Log to .learnings/FEATURE_REQUESTS.md" [ref=e117]:
+                      - text: Log to
+                      - code [ref=e118]: .learnings/FEATURE_REQUESTS.md
+                  - row "API/external tool fails Log to .learnings/ERRORS.md with integration details" [ref=e119]:
+                    - cell "API/external tool fails" [ref=e120]
+                    - cell "Log to .learnings/ERRORS.md with integration details" [ref=e121]:
+                      - text: Log to
+                      - code [ref=e122]: .learnings/ERRORS.md
+                      - text: with integration details
+                  - row "Knowledge was outdated Log to .learnings/LEARNINGS.md with category knowledge_gap" [ref=e123]:
+                    - cell "Knowledge was outdated" [ref=e124]
+                    - cell "Log to .learnings/LEARNINGS.md with category knowledge_gap" [ref=e125]:
+                      - text: Log to
+                      - code [ref=e126]: .learnings/LEARNINGS.md
+                      - text: with category
+                      - code [ref=e127]: knowledge_gap
+                  - row "Found better approach Log to .learnings/LEARNINGS.md with category best_practice" [ref=e128]:
+                    - cell "Found better approach" [ref=e129]
+                    - cell "Log to .learnings/LEARNINGS.md with category best_practice" [ref=e130]:
+                      - text: Log to
+                      - code [ref=e131]: .learnings/LEARNINGS.md
+                      - text: with category
+                      - code [ref=e132]: best_practice
+                  - 'row "Simplify/Harden recurring patterns Log/update .learnings/LEARNINGS.md with Source: simplify-and-harden and a stable Pattern-Key" [ref=e133]':
+                    - cell "Simplify/Harden recurring patterns" [ref=e134]
+                    - 'cell "Log/update .learnings/LEARNINGS.md with Source: simplify-and-harden and a stable Pattern-Key" [ref=e135]':
+                      - text: Log/update
+                      - code [ref=e136]: .learnings/LEARNINGS.md
+                      - text: with
+                      - code [ref=e137]: "Source: simplify-and-harden"
+                      - text: and a stable
+                      - code [ref=e138]: Pattern-Key
+                  - row "Similar to existing entry Link with **See Also**, consider priority bump" [ref=e139]:
+                    - cell "Similar to existing entry" [ref=e140]
+                    - cell "Link with **See Also**, consider priority bump" [ref=e141]:
+                      - text: Link with
+                      - code [ref=e142]: "**See Also**"
+                      - text: ", consider priority bump"
+                  - row "Broadly applicable learning Promote to CLAUDE.md, AGENTS.md, and/or .github/copilot-instructions.md" [ref=e143]:
+                    - cell "Broadly applicable learning" [ref=e144]
+                    - cell "Promote to CLAUDE.md, AGENTS.md, and/or .github/copilot-instructions.md" [ref=e145]:
+                      - text: Promote to
+                      - code [ref=e146]: CLAUDE.md
+                      - text: ","
+                      - code [ref=e147]: AGENTS.md
+                      - text: ", and/or"
+                      - code [ref=e148]: .github/copilot-instructions.md
+                  - row "Workflow improvements Promote to AGENTS.md (OpenClaw workspace)" [ref=e149]:
+                    - cell "Workflow improvements" [ref=e150]
+                    - cell "Promote to AGENTS.md (OpenClaw workspace)" [ref=e151]:
+                      - text: Promote to
+                      - code [ref=e152]: AGENTS.md
+                      - text: (OpenClaw workspace)
+                  - row "Tool gotchas Promote to TOOLS.md (OpenClaw workspace)" [ref=e153]:
+                    - cell "Tool gotchas" [ref=e154]
+                    - cell "Promote to TOOLS.md (OpenClaw workspace)" [ref=e155]:
+                      - text: Promote to
+                      - code [ref=e156]: TOOLS.md
+                      - text: (OpenClaw workspace)
+                  - row "Behavioral patterns Promote to SOUL.md (OpenClaw workspace)" [ref=e157]:
+                    - cell "Behavioral patterns" [ref=e158]
+                    - cell "Promote to SOUL.md (OpenClaw workspace)" [ref=e159]:
+                      - text: Promote to
+                      - code [ref=e160]: SOUL.md
+                      - text: (OpenClaw workspace)
+              - heading "OpenClaw Setup (Recommended)" [level=2] [ref=e161]
+              - paragraph [ref=e162]: OpenClaw is the primary platform for this skill. It uses workspace-based prompt injection with automatic skill loading.
+              - heading "Installation" [level=3] [ref=e163]
+              - paragraph [ref=e164]:
+                - strong [ref=e165]: "Via ClawdHub (recommended):"
+              - code [ref=e167]: clawdhub install self-improving-agent
+              - paragraph [ref=e168]:
+                - strong [ref=e169]: "Manual:"
+              - code [ref=e171]: git clone https://github.com/peterskoett/self-improving-agent.git ~/.openclaw/skills/self-improving-agent
+              - paragraph [ref=e172]:
+                - text: "Remade for openclaw from original repo :"
+                - link "https://github.com/pskoett/pskoett-ai-skills" [ref=e173] [cursor=pointer]:
+                  - /url: https://github.com/pskoett/pskoett-ai-skills
+                - text: "-"
+                - link "https://github.com/pskoett/pskoett-ai-skills/tree/main/skills/self-improvement" [ref=e174] [cursor=pointer]:
+                  - /url: https://github.com/pskoett/pskoett-ai-skills/tree/main/skills/self-improvement
+              - heading "Workspace Structure" [level=3] [ref=e175]
+              - paragraph [ref=e176]: "OpenClaw injects these files into every session:"
+              - code [ref=e178]: "~/.openclaw/workspace/ ├── AGENTS.md # Multi-agent workflows, delegation patterns ├── SOUL.md # Behavioral guidelines, personality, principles ├── TOOLS.md # Tool capabilities, integration gotchas ├── MEMORY.md # Long-term memory (main session only) ├── memory/ # Daily memory files │ └── YYYY-MM-DD.md └── .learnings/ # This skill's log files ├── LEARNINGS.md ├── ERRORS.md └── FEATURE_REQUESTS.md"
+              - heading "Create Learning Files" [level=3] [ref=e179]
+              - code [ref=e181]: mkdir -p ~/.openclaw/workspace/.learnings
+              - paragraph [ref=e182]:
+                - text: Then create the log files (or copy from
+                - code [ref=e183]: assets/
+                - text: "):"
+              - list [ref=e184]:
+                - listitem [ref=e185]:
+                  - code [ref=e186]: LEARNINGS.md
+                  - text: — corrections, knowledge gaps, best practices
+                - listitem [ref=e187]:
+                  - code [ref=e188]: ERRORS.md
+                  - text: — command failures, exceptions
+                - listitem [ref=e189]:
+                  - code [ref=e190]: FEATURE_REQUESTS.md
+                  - text: — user-requested capabilities
+              - heading "Promotion Targets" [level=3] [ref=e191]
+              - paragraph [ref=e192]: "When learnings prove broadly applicable, promote them to workspace files:"
+              - table [ref=e193]:
+                - rowgroup [ref=e194]:
+                  - row "Learning Type Promote To Example" [ref=e195]:
+                    - columnheader "Learning Type" [ref=e196]
+                    - columnheader "Promote To" [ref=e197]
+                    - columnheader "Example" [ref=e198]
+                - rowgroup [ref=e199]:
+                  - row "Behavioral patterns SOUL.md \"Be concise, avoid disclaimers\"" [ref=e200]:
+                    - cell "Behavioral patterns" [ref=e201]
+                    - cell "SOUL.md" [ref=e202]:
+                      - code [ref=e203]: SOUL.md
+                    - cell "\"Be concise, avoid disclaimers\"" [ref=e204]
+                  - row "Workflow improvements AGENTS.md \"Spawn sub-agents for long tasks\"" [ref=e205]:
+                    - cell "Workflow improvements" [ref=e206]
+                    - cell "AGENTS.md" [ref=e207]:
+                      - code [ref=e208]: AGENTS.md
+                    - cell "\"Spawn sub-agents for long tasks\"" [ref=e209]
+                  - row "Tool gotchas TOOLS.md \"Git push needs auth configured first\"" [ref=e210]:
+                    - cell "Tool gotchas" [ref=e211]
+                    - cell "TOOLS.md" [ref=e212]:
+                      - code [ref=e213]: TOOLS.md
+                    - cell "\"Git push needs auth configured first\"" [ref=e214]
+              - heading "Inter-Session Communication" [level=3] [ref=e215]
+              - paragraph [ref=e216]: "OpenClaw provides tools to share learnings across sessions:"
+              - list [ref=e217]:
+                - listitem [ref=e218]:
+                  - strong [ref=e219]: sessions_list
+                  - text: — View active/recent sessions
+                - listitem [ref=e220]:
+                  - strong [ref=e221]: sessions_history
+                  - text: — Read another session's transcript
+                - listitem [ref=e222]:
+                  - strong [ref=e223]: sessions_send
+                  - text: — Send a learning to another session
+                - listitem [ref=e224]:
+                  - strong [ref=e225]: sessions_spawn
+                  - text: — Spawn a sub-agent for background work
+              - 'heading "Optional: Enable Hook" [level=3] [ref=e226]'
+              - paragraph [ref=e227]: "For automatic reminders at session start:"
+              - code [ref=e229]: "# Copy hook to OpenClaw hooks directory cp -r hooks/openclaw ~/.openclaw/hooks/self-improvement # Enable it openclaw hooks enable self-improvement"
+              - paragraph [ref=e230]:
+                - text: See
+                - code [ref=e231]: references/openclaw-integration.md
+                - text: for complete details.
+              - separator [ref=e232]
+              - heading "Generic Setup (Other Agents)" [level=2] [ref=e233]
+              - paragraph [ref=e234]:
+                - text: For Claude Code, Codex, Copilot, or other agents, create
+                - code [ref=e235]: .learnings/
+                - text: "in your project:"
+              - code [ref=e237]: mkdir -p .learnings
+              - paragraph [ref=e238]:
+                - text: Copy templates from
+                - code [ref=e239]: assets/
+                - text: or create files with headers.
+              - heading "Add reference to agent files AGENTS.md, CLAUDE.md, or .github/copilot-instructions.md to remind yourself to log learnings. (this is an alternative to hook-based reminders)" [level=3] [ref=e240]
+              - heading "Self-Improvement Workflow" [level=4] [ref=e241]
+              - paragraph [ref=e242]: "When errors or corrections occur:"
+              - list [ref=e243]:
+                - listitem [ref=e244]:
+                  - text: Log to
+                  - code [ref=e245]: .learnings/ERRORS.md
+                  - text: ","
+                  - code [ref=e246]: LEARNINGS.md
+                  - text: ", or"
+                  - code [ref=e247]: FEATURE_REQUESTS.md
+                - listitem [ref=e248]:
+                  - text: "Review and promote broadly applicable learnings to:"
+                  - list [ref=e249]:
+                    - listitem [ref=e250]:
+                      - code [ref=e251]: CLAUDE.md
+                      - text: "- project facts and conventions"
+                    - listitem [ref=e252]:
+                      - code [ref=e253]: AGENTS.md
+                      - text: "- workflows and automation"
+                    - listitem [ref=e254]:
+                      - code [ref=e255]: .github/copilot-instructions.md
+                      - text: "- Copilot context"
+              - heading "Logging Format" [level=2] [ref=e256]
+              - heading "Learning Entry" [level=3] [ref=e257]
+              - paragraph [ref=e258]:
+                - text: Append to
+                - code [ref=e259]: .learnings/LEARNINGS.md
+                - text: ":"
+              - code [ref=e261]: "## [LRN-YYYYMMDD-XXX] category **Logged**: ISO-8601 timestamp **Priority**: low | medium | high | critical **Status**: pending **Area**: frontend | backend | infra | tests | docs | config ### Summary One-line description of what was learned ### Details Full context: what happened, what was wrong, what's correct ### Suggested Action Specific fix or improvement to make ### Metadata - Source: conversation | error | user_feedback - Related Files: path/to/file.ext - Tags: tag1, tag2 - See Also: LRN-20250110-001 (if related to existing entry) - Pattern-Key: simplify.dead_code | harden.input_validation (optional, for recurring-pattern tracking) - Recurrence-Count: 1 (optional) - First-Seen: 2025-01-15 (optional) - Last-Seen: 2025-01-15 (optional) ---"
+              - heading "Error Entry" [level=3] [ref=e262]
+              - paragraph [ref=e263]:
+                - text: Append to
+                - code [ref=e264]: .learnings/ERRORS.md
+                - text: ":"
+              - code [ref=e266]: "## [ERR-YYYYMMDD-XXX] skill_or_command_name **Logged**: ISO-8601 timestamp **Priority**: high **Status**: pending **Area**: frontend | backend | infra | tests | docs | config ### Summary Brief description of what failed ### Error"
+              - paragraph [ref=e267]: Actual error message or output
+              - code [ref=e269]: "### Context - Command/operation attempted - Input or parameters used - Environment details if relevant ### Suggested Fix If identifiable, what might resolve this ### Metadata - Reproducible: yes | no | unknown - Related Files: path/to/file.ext - See Also: ERR-20250110-001 (if recurring) ---"
+              - heading "Feature Request Entry" [level=3] [ref=e270]
+              - paragraph [ref=e271]:
+                - text: Append to
+                - code [ref=e272]: .learnings/FEATURE_REQUESTS.md
+                - text: ":"
+              - code [ref=e274]: "## [FEAT-YYYYMMDD-XXX] capability_name **Logged**: ISO-8601 timestamp **Priority**: medium **Status**: pending **Area**: frontend | backend | infra | tests | docs | config ### Requested Capability What the user wanted to do ### User Context Why they needed it, what problem they're solving ### Complexity Estimate simple | medium | complex ### Suggested Implementation How this could be built, what it might extend ### Metadata - Frequency: first_time | recurring - Related Features: existing_feature_name ---"
+              - heading "ID Generation" [level=2] [ref=e275]
+              - paragraph [ref=e276]:
+                - text: "Format:"
+                - code [ref=e277]: TYPE-YYYYMMDD-XXX
+              - list [ref=e278]:
+                - listitem [ref=e279]:
+                  - text: "TYPE:"
+                  - code [ref=e280]: LRN
+                  - text: (learning),
+                  - code [ref=e281]: ERR
+                  - text: (error),
+                  - code [ref=e282]: FEAT
+                  - text: (feature)
+                - listitem [ref=e283]: "YYYYMMDD: Current date"
+                - listitem [ref=e284]:
+                  - text: "XXX: Sequential number or random 3 chars (e.g.,"
+                  - code [ref=e285]: "001"
+                  - text: ","
+                  - code [ref=e286]: A7B
+                  - text: )
+              - paragraph [ref=e287]:
+                - text: "Examples:"
+                - code [ref=e288]: LRN-20250115-001
+                - text: ","
+                - code [ref=e289]: ERR-20250115-A3F
+                - text: ","
+                - code [ref=e290]: FEAT-20250115-002
+              - heading "Resolving Entries" [level=2] [ref=e291]
+              - paragraph [ref=e292]: "When an issue is fixed, update the entry:"
+              - list [ref=e293]:
+                - listitem [ref=e294]:
+                  - text: Change
+                  - code [ref=e295]: "**Status**: pending"
+                  - text: →
+                  - code [ref=e296]: "**Status**: resolved"
+                - listitem [ref=e297]: "Add resolution block after Metadata:"
+              - code [ref=e299]: "### Resolution - **Resolved**: 2025-01-16T09:00:00Z - **Commit/PR**: abc123 or #42 - **Notes**: Brief description of what was done"
+              - paragraph [ref=e300]: "Other status values:"
+              - list [ref=e301]:
+                - listitem [ref=e302]:
+                  - code [ref=e303]: in_progress
+                  - text: "- Actively being worked on"
+                - listitem [ref=e304]:
+                  - code [ref=e305]: wont_fix
+                  - text: "- Decided not to address (add reason in Resolution notes)"
+                - listitem [ref=e306]:
+                  - code [ref=e307]: promoted
+                  - text: "- Elevated to CLAUDE.md, AGENTS.md, or .github/copilot-instructions.md"
+              - heading "Promoting to Project Memory" [level=2] [ref=e308]
+              - paragraph [ref=e309]: When a learning is broadly applicable (not a one-off fix), promote it to permanent project memory.
+              - heading "When to Promote" [level=3] [ref=e310]
+              - list [ref=e311]:
+                - listitem [ref=e312]: Learning applies across multiple files/features
+                - listitem [ref=e313]: Knowledge any contributor (human or AI) should know
+                - listitem [ref=e314]: Prevents recurring mistakes
+                - listitem [ref=e315]: Documents project-specific conventions
+              - heading "Promotion Targets" [level=3] [ref=e316]
+              - table [ref=e317]:
+                - rowgroup [ref=e318]:
+                  - row "Target What Belongs There" [ref=e319]:
+                    - columnheader "Target" [ref=e320]
+                    - columnheader "What Belongs There" [ref=e321]
+                - rowgroup [ref=e322]:
+                  - row "CLAUDE.md Project facts, conventions, gotchas for all Claude interactions" [ref=e323]:
+                    - cell "CLAUDE.md" [ref=e324]:
+                      - code [ref=e325]: CLAUDE.md
+                    - cell "Project facts, conventions, gotchas for all Claude interactions" [ref=e326]
+                  - row "AGENTS.md Agent-specific workflows, tool usage patterns, automation rules" [ref=e327]:
+                    - cell "AGENTS.md" [ref=e328]:
+                      - code [ref=e329]: AGENTS.md
+                    - cell "Agent-specific workflows, tool usage patterns, automation rules" [ref=e330]
+                  - row ".github/copilot-instructions.md Project context and conventions for GitHub Copilot" [ref=e331]:
+                    - cell ".github/copilot-instructions.md" [ref=e332]:
+                      - code [ref=e333]: .github/copilot-instructions.md
+                    - cell "Project context and conventions for GitHub Copilot" [ref=e334]
+                  - row "SOUL.md Behavioral guidelines, communication style, principles (OpenClaw workspace)" [ref=e335]:
+                    - cell "SOUL.md" [ref=e336]:
+                      - code [ref=e337]: SOUL.md
+                    - cell "Behavioral guidelines, communication style, principles (OpenClaw workspace)" [ref=e338]
+                  - row "TOOLS.md Tool capabilities, usage patterns, integration gotchas (OpenClaw workspace)" [ref=e339]:
+                    - cell "TOOLS.md" [ref=e340]:
+                      - code [ref=e341]: TOOLS.md
+                    - cell "Tool capabilities, usage patterns, integration gotchas (OpenClaw workspace)" [ref=e342]
+              - heading "How to Promote" [level=3] [ref=e343]
+              - list [ref=e344]:
+                - listitem [ref=e345]:
+                  - strong [ref=e346]: Distill
+                  - text: the learning into a concise rule or fact
+                - listitem [ref=e347]:
+                  - strong [ref=e348]: Add
+                  - text: to appropriate section in target file (create file if needed)
+                - listitem [ref=e349]:
+                  - strong [ref=e350]: Update
+                  - text: "original entry:"
+                  - list [ref=e351]:
+                    - listitem [ref=e352]:
+                      - text: Change
+                      - code [ref=e353]: "**Status**: pending"
+                      - text: →
+                      - code [ref=e354]: "**Status**: promoted"
+                    - listitem [ref=e355]:
+                      - text: Add
+                      - code [ref=e356]: "**Promoted**: CLAUDE.md"
+                      - text: ","
+                      - code [ref=e357]: AGENTS.md
+                      - text: ", or"
+                      - code [ref=e358]: .github/copilot-instructions.md
+              - heading "Promotion Examples" [level=3] [ref=e359]
+              - paragraph [ref=e360]:
+                - strong [ref=e361]: Learning
+                - text: "(verbose):"
+              - blockquote [ref=e362]:
+                - paragraph [ref=e363]:
+                  - text: Project uses pnpm workspaces. Attempted
+                  - code [ref=e364]: npm install
+                  - text: but failed. Lock file is
+                  - code [ref=e365]: pnpm-lock.yaml
+                  - text: . Must use
+                  - code [ref=e366]: pnpm install
+                  - text: .
+              - paragraph [ref=e367]:
+                - strong [ref=e368]: In CLAUDE.md
+                - text: "(concise):"
+              - code [ref=e370]: "## Build & Dependencies - Package manager: pnpm (not npm) - use `pnpm install`"
+              - paragraph [ref=e371]:
+                - strong [ref=e372]: Learning
+                - text: "(verbose):"
+              - blockquote [ref=e373]:
+                - paragraph [ref=e374]: When modifying API endpoints, must regenerate TypeScript client. Forgetting this causes type mismatches at runtime.
+              - paragraph [ref=e375]:
+                - strong [ref=e376]: In AGENTS.md
+                - text: "(actionable):"
+              - code [ref=e378]: "## After API Changes 1. Regenerate client: `pnpm run generate:api` 2. Check for type errors: `pnpm tsc --noEmit`"
+              - heading "Recurring Pattern Detection" [level=2] [ref=e379]
+              - paragraph [ref=e380]: "If logging something similar to an existing entry:"
+              - list [ref=e381]:
+                - listitem [ref=e382]:
+                  - strong [ref=e383]: Search first
+                  - text: ":"
+                  - code [ref=e384]: grep -r "keyword" .learnings/
+                - listitem [ref=e385]:
+                  - strong [ref=e386]: Link entries
+                  - text: ": Add"
+                  - code [ref=e387]: "**See Also**: ERR-20250110-001"
+                  - text: in Metadata
+                - listitem [ref=e388]:
+                  - strong [ref=e389]: Bump priority
+                  - text: if issue keeps recurring
+                - listitem [ref=e390]:
+                  - strong [ref=e391]: Consider systemic fix
+                  - text: ": Recurring issues often indicate:"
+                  - list [ref=e392]:
+                    - listitem [ref=e393]: Missing documentation (→ promote to CLAUDE.md or .github/copilot-instructions.md)
+                    - listitem [ref=e394]: Missing automation (→ add to AGENTS.md)
+                    - listitem [ref=e395]: Architectural problem (→ create tech debt ticket)
+              - heading "Simplify & Harden Feed" [level=2] [ref=e396]
+              - paragraph [ref=e397]:
+                - text: Use this workflow to ingest recurring patterns from the
+                - code [ref=e398]: simplify-and-harden
+                - text: skill and turn them into durable prompt guidance.
+              - heading "Ingestion Workflow" [level=3] [ref=e399]
+              - list [ref=e400]:
+                - listitem [ref=e401]:
+                  - text: Read
+                  - code [ref=e402]: simplify_and_harden.learning_loop.candidates
+                  - text: from the task summary.
+                - listitem [ref=e403]:
+                  - text: For each candidate, use
+                  - code [ref=e404]: pattern_key
+                  - text: as the stable dedupe key.
+                - listitem [ref=e405]:
+                  - text: Search
+                  - code [ref=e406]: .learnings/LEARNINGS.md
+                  - text: "for an existing entry with that key:"
+                  - list [ref=e407]:
+                    - listitem [ref=e408]:
+                      - code [ref=e409]: "grep -n \"Pattern-Key: <pattern_key>\" .learnings/LEARNINGS.md"
+                - listitem [ref=e410]:
+                  - text: "If found:"
+                  - list [ref=e411]:
+                    - listitem [ref=e412]:
+                      - text: Increment
+                      - code [ref=e413]: Recurrence-Count
+                    - listitem [ref=e414]:
+                      - text: Update
+                      - code [ref=e415]: Last-Seen
+                    - listitem [ref=e416]:
+                      - text: Add
+                      - code [ref=e417]: See Also
+                      - text: links to related entries/tasks
+                - listitem [ref=e418]:
+                  - text: "If not found:"
+                  - list [ref=e419]:
+                    - listitem [ref=e420]:
+                      - text: Create a new
+                      - code [ref=e421]: LRN-...
+                      - text: entry
+                    - listitem [ref=e422]:
+                      - text: Set
+                      - code [ref=e423]: "Source: simplify-and-harden"
+                    - listitem [ref=e424]:
+                      - text: Set
+                      - code [ref=e425]: Pattern-Key
+                      - text: ","
+                      - code [ref=e426]: "Recurrence-Count: 1"
+                      - text: ", and"
+                      - code [ref=e427]: First-Seen
+                      - text: /
+                      - code [ref=e428]: Last-Seen
+              - heading "Promotion Rule (System Prompt Feedback)" [level=3] [ref=e429]
+              - paragraph [ref=e430]: "Promote recurring patterns into agent context/system prompt files when all are true:"
+              - list [ref=e431]:
+                - listitem [ref=e432]:
+                  - code [ref=e433]: Recurrence-Count >= 3
+                - listitem [ref=e434]: Seen across at least 2 distinct tasks
+                - listitem [ref=e435]: Occurred within a 30-day window
+              - paragraph [ref=e436]: "Promotion targets:"
+              - list [ref=e437]:
+                - listitem [ref=e438]:
+                  - code [ref=e439]: CLAUDE.md
+                - listitem [ref=e440]:
+                  - code [ref=e441]: AGENTS.md
+                - listitem [ref=e442]:
+                  - code [ref=e443]: .github/copilot-instructions.md
+                - listitem [ref=e444]:
+                  - code [ref=e445]: SOUL.md
+                  - text: /
+                  - code [ref=e446]: TOOLS.md
+                  - text: for OpenClaw workspace-level guidance when applicable
+              - paragraph [ref=e447]: Write promoted rules as short prevention rules (what to do before/while coding), not long incident write-ups.
+              - heading "Periodic Review" [level=2] [ref=e448]
+              - paragraph [ref=e449]:
+                - text: Review
+                - code [ref=e450]: .learnings/
+                - text: "at natural breakpoints:"
+              - heading "When to Review" [level=3] [ref=e451]
+              - list [ref=e452]:
+                - listitem [ref=e453]: Before starting a new major task
+                - listitem [ref=e454]: After completing a feature
+                - listitem [ref=e455]: When working in an area with past learnings
+                - listitem [ref=e456]: Weekly during active development
+              - heading "Quick Status Check" [level=3] [ref=e457]
+              - code [ref=e459]: "# Count pending items grep -h \"Status\\*\\*: pending\" .learnings/*.md | wc -l # List pending high-priority items grep -B5 \"Priority\\*\\*: high\" .learnings/*.md | grep \"^## \\[\" # Find learnings for a specific area grep -l \"Area\\*\\*: backend\" .learnings/*.md"
+              - heading "Review Actions" [level=3] [ref=e460]
+              - list [ref=e461]:
+                - listitem [ref=e462]: Resolve fixed items
+                - listitem [ref=e463]: Promote applicable learnings
+                - listitem [ref=e464]: Link related entries
+                - listitem [ref=e465]: Escalate recurring issues
+              - heading "Detection Triggers" [level=2] [ref=e466]
+              - paragraph [ref=e467]: "Automatically log when you notice:"
+              - paragraph [ref=e468]:
+                - strong [ref=e469]: Corrections
+                - text: (→ learning with
+                - code [ref=e470]: correction
+                - text: "category):"
+              - list [ref=e471]:
+                - listitem [ref=e472]: "\"No, that's not right...\""
+                - listitem [ref=e473]: "\"Actually, it should be...\""
+                - listitem [ref=e474]: "\"You're wrong about...\""
+                - listitem [ref=e475]: "\"That's outdated...\""
+              - paragraph [ref=e476]:
+                - strong [ref=e477]: Feature Requests
+                - text: "(→ feature request):"
+              - list [ref=e478]:
+                - listitem [ref=e479]: "\"Can you also...\""
+                - listitem [ref=e480]: "\"I wish you could...\""
+                - listitem [ref=e481]: "\"Is there a way to...\""
+                - listitem [ref=e482]: "\"Why can't you...\""
+              - paragraph [ref=e483]:
+                - strong [ref=e484]: Knowledge Gaps
+                - text: (→ learning with
+                - code [ref=e485]: knowledge_gap
+                - text: "category):"
+              - list [ref=e486]:
+                - listitem [ref=e487]: User provides information you didn't know
+                - listitem [ref=e488]: Documentation you referenced is outdated
+                - listitem [ref=e489]: API behavior differs from your understanding
+              - paragraph [ref=e490]:
+                - strong [ref=e491]: Errors
+                - text: "(→ error entry):"
+              - list [ref=e492]:
+                - listitem [ref=e493]: Command returns non-zero exit code
+                - listitem [ref=e494]: Exception or stack trace
+                - listitem [ref=e495]: Unexpected output or behavior
+                - listitem [ref=e496]: Timeout or connection failure
+              - heading "Priority Guidelines" [level=2] [ref=e497]
+              - table [ref=e498]:
+                - rowgroup [ref=e499]:
+                  - row "Priority When to Use" [ref=e500]:
+                    - columnheader "Priority" [ref=e501]
+                    - columnheader "When to Use" [ref=e502]
+                - rowgroup [ref=e503]:
+                  - row "critical Blocks core functionality, data loss risk, security issue" [ref=e504]:
+                    - cell "critical" [ref=e505]:
+                      - code [ref=e506]: critical
+                    - cell "Blocks core functionality, data loss risk, security issue" [ref=e507]
+                  - row "high Significant impact, affects common workflows, recurring issue" [ref=e508]:
+                    - cell "high" [ref=e509]:
+                      - code [ref=e510]: high
+                    - cell "Significant impact, affects common workflows, recurring issue" [ref=e511]
+                  - row "medium Moderate impact, workaround exists" [ref=e512]:
+                    - cell "medium" [ref=e513]:
+                      - code [ref=e514]: medium
+                    - cell "Moderate impact, workaround exists" [ref=e515]
+                  - row "low Minor inconvenience, edge case, nice-to-have" [ref=e516]:
+                    - cell "low" [ref=e517]:
+                      - code [ref=e518]: low
+                    - cell "Minor inconvenience, edge case, nice-to-have" [ref=e519]
+              - heading "Area Tags" [level=2] [ref=e520]
+              - paragraph [ref=e521]: "Use to filter learnings by codebase region:"
+              - table [ref=e522]:
+                - rowgroup [ref=e523]:
+                  - row "Area Scope" [ref=e524]:
+                    - columnheader "Area" [ref=e525]
+                    - columnheader "Scope" [ref=e526]
+                - rowgroup [ref=e527]:
+                  - row "frontend UI, components, client-side code" [ref=e528]:
+                    - cell "frontend" [ref=e529]:
+                      - code [ref=e530]: frontend
+                    - cell "UI, components, client-side code" [ref=e531]
+                  - row "backend API, services, server-side code" [ref=e532]:
+                    - cell "backend" [ref=e533]:
+                      - code [ref=e534]: backend
+                    - cell "API, services, server-side code" [ref=e535]
+                  - row "infra CI/CD, deployment, Docker, cloud" [ref=e536]:
+                    - cell "infra" [ref=e537]:
+                      - code [ref=e538]: infra
+                    - cell "CI/CD, deployment, Docker, cloud" [ref=e539]
+                  - row "tests Test files, testing utilities, coverage" [ref=e540]:
+                    - cell "tests" [ref=e541]:
+                      - code [ref=e542]: tests
+                    - cell "Test files, testing utilities, coverage" [ref=e543]
+                  - row "docs Documentation, comments, READMEs" [ref=e544]:
+                    - cell "docs" [ref=e545]:
+                      - code [ref=e546]: docs
+                    - cell "Documentation, comments, READMEs" [ref=e547]
+                  - row "config Configuration files, environment, settings" [ref=e548]:
+                    - cell "config" [ref=e549]:
+                      - code [ref=e550]: config
+                    - cell "Configuration files, environment, settings" [ref=e551]
+              - heading "Best Practices" [level=2] [ref=e552]
+              - list [ref=e553]:
+                - listitem [ref=e554]:
+                  - strong [ref=e555]: Log immediately
+                  - text: "- context is freshest right after the issue"
+                - listitem [ref=e556]:
+                  - strong [ref=e557]: Be specific
+                  - text: "- future agents need to understand quickly"
+                - listitem [ref=e558]:
+                  - strong [ref=e559]: Include reproduction steps
+                  - text: "- especially for errors"
+                - listitem [ref=e560]:
+                  - strong [ref=e561]: Link related files
+                  - text: "- makes fixes easier"
+                - listitem [ref=e562]:
+                  - strong [ref=e563]: Suggest concrete fixes
+                  - text: "- not just \"investigate\""
+                - listitem [ref=e564]:
+                  - strong [ref=e565]: Use consistent categories
+                  - text: "- enables filtering"
+                - listitem [ref=e566]:
+                  - strong [ref=e567]: Promote aggressively
+                  - text: "- if in doubt, add to CLAUDE.md or .github/copilot-instructions.md"
+                - listitem [ref=e568]:
+                  - strong [ref=e569]: Review regularly
+                  - text: "- stale learnings lose value"
+              - heading "Gitignore Options" [level=2] [ref=e570]
+              - paragraph [ref=e571]:
+                - strong [ref=e572]: Keep learnings local
+                - text: "(per-developer):"
+              - code [ref=e574]: .learnings/
+              - paragraph [ref=e575]:
+                - strong [ref=e576]: Track learnings in repo
+                - text: "(team-wide): Don't add to .gitignore - learnings become shared knowledge."
+              - paragraph [ref=e577]:
+                - strong [ref=e578]: Hybrid
+                - text: "(track templates, ignore entries):"
+              - code [ref=e580]: .learnings/*.md !.learnings/.gitkeep
+              - heading "Hook Integration" [level=2] [ref=e581]
+              - paragraph [ref=e582]:
+                - text: Enable automatic reminders through agent hooks. This is
+                - strong [ref=e583]: opt-in
+                - text: "- you must explicitly configure hooks."
+              - heading "Quick Setup (Claude Code / Codex)" [level=3] [ref=e584]
+              - paragraph [ref=e585]:
+                - text: Create
+                - code [ref=e586]: .claude/settings.json
+                - text: "in your project:"
+              - code [ref=e588]: "{ \"hooks\": { \"UserPromptSubmit\": [{ \"matcher\": \"\", \"hooks\": [{ \"type\": \"command\", \"command\": \"./skills/self-improvement/scripts/activator.sh\" }] }] } }"
+              - paragraph [ref=e589]: This injects a learning evaluation reminder after each prompt (~50-100 tokens overhead).
+              - heading "Full Setup (With Error Detection)" [level=3] [ref=e590]
+              - code [ref=e592]: "{ \"hooks\": { \"UserPromptSubmit\": [{ \"matcher\": \"\", \"hooks\": [{ \"type\": \"command\", \"command\": \"./skills/self-improvement/scripts/activator.sh\" }] }], \"PostToolUse\": [{ \"matcher\": \"Bash\", \"hooks\": [{ \"type\": \"command\", \"command\": \"./skills/self-improvement/scripts/error-detector.sh\" }] }] } }"
+              - heading "Available Hook Scripts" [level=3] [ref=e593]
+              - table [ref=e594]:
+                - rowgroup [ref=e595]:
+                  - row "Script Hook Type Purpose" [ref=e596]:
+                    - columnheader "Script" [ref=e597]
+                    - columnheader "Hook Type" [ref=e598]
+                    - columnheader "Purpose" [ref=e599]
+                - rowgroup [ref=e600]:
+                  - row "scripts/activator.sh UserPromptSubmit Reminds to evaluate learnings after tasks" [ref=e601]:
+                    - cell "scripts/activator.sh" [ref=e602]:
+                      - code [ref=e603]: scripts/activator.sh
+                    - cell "UserPromptSubmit" [ref=e604]
+                    - cell "Reminds to evaluate learnings after tasks" [ref=e605]
+                  - row "scripts/error-detector.sh PostToolUse (Bash) Triggers on command errors" [ref=e606]:
+                    - cell "scripts/error-detector.sh" [ref=e607]:
+                      - code [ref=e608]: scripts/error-detector.sh
+                    - cell "PostToolUse (Bash)" [ref=e609]
+                    - cell "Triggers on command errors" [ref=e610]
+              - paragraph [ref=e611]:
+                - text: See
+                - code [ref=e612]: references/hooks-setup.md
+                - text: for detailed configuration and troubleshooting.
+              - heading "Automatic Skill Extraction" [level=2] [ref=e613]
+              - paragraph [ref=e614]: When a learning is valuable enough to become a reusable skill, extract it using the provided helper.
+              - heading "Skill Extraction Criteria" [level=3] [ref=e615]
+              - paragraph [ref=e616]: "A learning qualifies for skill extraction when ANY of these apply:"
+              - table [ref=e617]:
+                - rowgroup [ref=e618]:
+                  - row "Criterion Description" [ref=e619]:
+                    - columnheader "Criterion" [ref=e620]
+                    - columnheader "Description" [ref=e621]
+                - rowgroup [ref=e622]:
+                  - row "Recurring Has See Also links to 2+ similar issues" [ref=e623]:
+                    - cell "Recurring" [ref=e624]:
+                      - strong [ref=e625]: Recurring
+                    - cell "Has See Also links to 2+ similar issues" [ref=e626]:
+                      - text: Has
+                      - code [ref=e627]: See Also
+                      - text: links to 2+ similar issues
+                  - row "Verified Status is resolved with working fix" [ref=e628]:
+                    - cell "Verified" [ref=e629]:
+                      - strong [ref=e630]: Verified
+                    - cell "Status is resolved with working fix" [ref=e631]:
+                      - text: Status is
+                      - code [ref=e632]: resolved
+                      - text: with working fix
+                  - row "Non-obvious Required actual debugging/investigation to discover" [ref=e633]:
+                    - cell "Non-obvious" [ref=e634]:
+                      - strong [ref=e635]: Non-obvious
+                    - cell "Required actual debugging/investigation to discover" [ref=e636]
+                  - row "Broadly applicable Not project-specific; useful across codebases" [ref=e637]:
+                    - cell "Broadly applicable" [ref=e638]:
+                      - strong [ref=e639]: Broadly applicable
+                    - cell "Not project-specific; useful across codebases" [ref=e640]
+                  - row "User-flagged User says \"save this as a skill\" or similar" [ref=e641]:
+                    - cell "User-flagged" [ref=e642]:
+                      - strong [ref=e643]: User-flagged
+                    - cell "User says \"save this as a skill\" or similar" [ref=e644]
+              - heading "Extraction Workflow" [level=3] [ref=e645]
+              - list [ref=e646]:
+                - listitem [ref=e647]:
+                  - strong [ref=e648]: Identify candidate
+                  - text: ": Learning meets extraction criteria"
+                - listitem [ref=e649]:
+                  - strong [ref=e650]: Run helper
+                  - text: "(or create manually):"
+                  - code [ref=e652]: ./skills/self-improvement/scripts/extract-skill.sh skill-name --dry-run ./skills/self-improvement/scripts/extract-skill.sh skill-name
+                - listitem [ref=e653]:
+                  - strong [ref=e654]: Customize SKILL.md
+                  - text: ": Fill in template with learning content"
+                - listitem [ref=e655]:
+                  - strong [ref=e656]: Update learning
+                  - text: ": Set status to"
+                  - code [ref=e657]: promoted_to_skill
+                  - text: ", add"
+                  - code [ref=e658]: Skill-Path
+                - listitem [ref=e659]:
+                  - strong [ref=e660]: Verify
+                  - text: ": Read skill in fresh session to ensure it's self-contained"
+              - heading "Manual Extraction" [level=3] [ref=e661]
+              - paragraph [ref=e662]: "If you prefer manual creation:"
+              - list [ref=e663]:
+                - listitem [ref=e664]:
+                  - text: Create
+                  - code [ref=e665]: skills/<skill-name>/SKILL.md
+                - listitem [ref=e666]:
+                  - text: Use template from
+                  - code [ref=e667]: assets/SKILL-TEMPLATE.md
+                - listitem [ref=e668]:
+                  - text: Follow
+                  - link "Agent Skills spec" [ref=e669] [cursor=pointer]:
+                    - /url: https://agentskills.io/specification
+                  - text: ":"
+                  - list [ref=e670]:
+                    - listitem [ref=e671]:
+                      - text: YAML frontmatter with
+                      - code [ref=e672]: name
+                      - text: and
+                      - code [ref=e673]: description
+                    - listitem [ref=e674]: Name must match folder name
+                    - listitem [ref=e675]: No README.md inside skill folder
+              - heading "Extraction Detection Triggers" [level=3] [ref=e676]
+              - paragraph [ref=e677]: "Watch for these signals that a learning should become a skill:"
+              - paragraph [ref=e678]:
+                - strong [ref=e679]: "In conversation:"
+              - list [ref=e680]:
+                - listitem [ref=e681]: "\"Save this as a skill\""
+                - listitem [ref=e682]: "\"I keep running into this\""
+                - listitem [ref=e683]: "\"This would be useful for other projects\""
+                - listitem [ref=e684]: "\"Remember this pattern\""
+              - paragraph [ref=e685]:
+                - strong [ref=e686]: "In learning entries:"
+              - list [ref=e687]:
+                - listitem [ref=e688]:
+                  - text: Multiple
+                  - code [ref=e689]: See Also
+                  - text: links (recurring issue)
+                - listitem [ref=e690]: High priority + resolved status
+                - listitem [ref=e691]:
+                  - text: "Category:"
+                  - code [ref=e692]: best_practice
+                  - text: with broad applicability
+                - listitem [ref=e693]: User feedback praising the solution
+              - heading "Skill Quality Gates" [level=3] [ref=e694]
+              - paragraph [ref=e695]: "Before extraction, verify:"
+              - list [ref=e696]:
+                - listitem [ref=e697]:
+                  - checkbox [disabled] [ref=e698]
+                  - text: Solution is tested and working
+                - listitem [ref=e699]:
+                  - checkbox [disabled] [ref=e700]
+                  - text: Description is clear without original context
+                - listitem [ref=e701]:
+                  - checkbox [disabled] [ref=e702]
+                  - text: Code examples are self-contained
+                - listitem [ref=e703]:
+                  - checkbox [disabled] [ref=e704]
+                  - text: No project-specific hardcoded values
+                - listitem [ref=e705]:
+                  - checkbox [disabled] [ref=e706]
+                  - text: Follows skill naming conventions (lowercase, hyphens)
+              - heading "Multi-Agent Support" [level=2] [ref=e707]
+              - paragraph [ref=e708]: This skill works across different AI coding agents with agent-specific activation.
+              - heading "Claude Code" [level=3] [ref=e709]
+              - paragraph [ref=e710]:
+                - strong [ref=e711]: Activation
+                - text: ": Hooks (UserPromptSubmit, PostToolUse)"
+                - strong [ref=e712]: Setup
+                - text: ":"
+                - code [ref=e713]: .claude/settings.json
+                - text: with hook configuration
+                - strong [ref=e714]: Detection
+                - text: ": Automatic via hook scripts"
+              - heading "Codex CLI" [level=3] [ref=e715]
+              - paragraph [ref=e716]:
+                - strong [ref=e717]: Activation
+                - text: ": Hooks (same pattern as Claude Code)"
+                - strong [ref=e718]: Setup
+                - text: ":"
+                - code [ref=e719]: .codex/settings.json
+                - text: with hook configuration
+                - strong [ref=e720]: Detection
+                - text: ": Automatic via hook scripts"
+              - heading "GitHub Copilot" [level=3] [ref=e721]
+              - paragraph [ref=e722]:
+                - strong [ref=e723]: Activation
+                - text: ": Manual (no hook support)"
+                - strong [ref=e724]: Setup
+                - text: ": Add to"
+                - code [ref=e725]: .github/copilot-instructions.md
+                - text: ":"
+              - code [ref=e727]: "## Self-Improvement After solving non-obvious issues, consider logging to `.learnings/`: 1. Use format from self-improvement skill 2. Link related entries with See Also 3. Promote high-value learnings to skills Ask in chat: \"Should I log this as a learning?\""
+              - paragraph [ref=e728]:
+                - strong [ref=e729]: Detection
+                - text: ": Manual review at session end"
+              - heading "OpenClaw" [level=3] [ref=e730]
+              - paragraph [ref=e731]:
+                - strong [ref=e732]: Activation
+                - text: ": Workspace injection + inter-agent messaging"
+                - strong [ref=e733]: Setup
+                - text: ": See \"OpenClaw Setup\" section above"
+                - strong [ref=e734]: Detection
+                - text: ": Via session tools and workspace files"
+              - heading "Agent-Agnostic Guidance" [level=3] [ref=e735]
+              - paragraph [ref=e736]: "Regardless of agent, apply self-improvement when you:"
+              - list [ref=e737]:
+                - listitem [ref=e738]:
+                  - strong [ref=e739]: Discover something non-obvious
+                  - text: "- solution wasn't immediate"
+                - listitem [ref=e740]:
+                  - strong [ref=e741]: Correct yourself
+                  - text: "- initial approach was wrong"
+                - listitem [ref=e742]:
+                  - strong [ref=e743]: Learn project conventions
+                  - text: "- discovered undocumented patterns"
+                - listitem [ref=e744]:
+                  - strong [ref=e745]: Hit unexpected errors
+                  - text: "- especially if diagnosis was difficult"
+                - listitem [ref=e746]:
+                  - strong [ref=e747]: Find better approaches
+                  - text: "- improved on your original solution"
+              - heading "Copilot Chat Integration" [level=3] [ref=e748]
+              - paragraph [ref=e749]: "For Copilot users, add this to your prompts when relevant:"
+              - blockquote [ref=e750]:
+                - paragraph [ref=e751]:
+                  - text: After completing this task, evaluate if any learnings should be logged to
+                  - code [ref=e752]: .learnings/
+                  - text: using the self-improvement skill format.
+              - paragraph [ref=e753]: "Or use quick prompts:"
+              - list [ref=e754]:
+                - listitem [ref=e755]: "\"Log this to learnings\""
+                - listitem [ref=e756]: "\"Create a skill from this solution\""
+                - listitem [ref=e757]: "\"Check .learnings/ for related issues\""
+          - generic [ref=e758]:
+            - generic [ref=e759]:
+              - generic [ref=e760]:
+                - heading "Files" [level=3] [ref=e761]
+                - generic [ref=e762]: 15 total
+              - generic [ref=e763]:
+                - button "SKILL.md 19 KB" [ref=e764] [cursor=pointer]:
+                  - generic [ref=e765]: SKILL.md
+                  - generic [ref=e766]: 19 KB
+                - button ".learnings/FEATURE_REQUESTS.md 84 B" [ref=e767] [cursor=pointer]:
+                  - generic [ref=e768]: .learnings/FEATURE_REQUESTS.md
+                  - generic [ref=e769]: 84 B
+                - button ".learnings/ERRORS.md 75 B" [ref=e770] [cursor=pointer]:
+                  - generic [ref=e771]: .learnings/ERRORS.md
+                  - generic [ref=e772]: 75 B
+                - button ".learnings/LEARNINGS.md 99 B" [ref=e773] [cursor=pointer]:
+                  - generic [ref=e774]: .learnings/LEARNINGS.md
+                  - generic [ref=e775]: 99 B
+                - button "assets/SKILL-TEMPLATE.md 3.3 KB" [ref=e776] [cursor=pointer]:
+                  - generic [ref=e777]: assets/SKILL-TEMPLATE.md
+                  - generic [ref=e778]: 3.3 KB
+                - button "assets/LEARNINGS.md 1.1 KB" [ref=e779] [cursor=pointer]:
+                  - generic [ref=e780]: assets/LEARNINGS.md
+                  - generic [ref=e781]: 1.1 KB
+                - button "scripts/activator.sh 680 B" [ref=e782] [cursor=pointer]:
+                  - generic [ref=e783]: scripts/activator.sh
+                  - generic [ref=e784]: 680 B
+                - button "scripts/extract-skill.sh 5.2 KB" [ref=e785] [cursor=pointer]:
+                  - generic [ref=e786]: scripts/extract-skill.sh
+                  - generic [ref=e787]: 5.2 KB
+                - button "scripts/error-detector.sh 1.3 KB" [ref=e788] [cursor=pointer]:
+                  - generic [ref=e789]: scripts/error-detector.sh
+                  - generic [ref=e790]: 1.3 KB
+                - button "hooks/openclaw/handler.js 1.6 KB" [ref=e791] [cursor=pointer]:
+                  - generic [ref=e792]: hooks/openclaw/handler.js
+                  - generic [ref=e793]: 1.6 KB
+                - button "hooks/openclaw/HOOK.md 589 B" [ref=e794] [cursor=pointer]:
+                  - generic [ref=e795]: hooks/openclaw/HOOK.md
+                  - generic [ref=e796]: 589 B
+                - button "hooks/openclaw/handler.ts 1.8 KB" [ref=e797] [cursor=pointer]:
+                  - generic [ref=e798]: hooks/openclaw/handler.ts
+                  - generic [ref=e799]: 1.8 KB
+                - button "references/examples.md 8.1 KB" [ref=e800] [cursor=pointer]:
+                  - generic [ref=e801]: references/examples.md
+                  - generic [ref=e802]: 8.1 KB
+                - button "references/openclaw-integration.md 5.5 KB" [ref=e803] [cursor=pointer]:
+                  - generic [ref=e804]: references/openclaw-integration.md
+                  - generic [ref=e805]: 5.5 KB
+                - button "references/hooks-setup.md 4.8 KB" [ref=e806] [cursor=pointer]:
+                  - generic [ref=e807]: references/hooks-setup.md
+                  - generic [ref=e808]: 4.8 KB
+            - generic [ref=e809]:
+              - generic [ref=e811]: Select a file
+              - generic [ref=e813]: Select a file to preview.
+      - generic [ref=e814]:
+        - heading "Comments" [level=2] [ref=e815]
+        - paragraph [ref=e816]: Sign in to comment.
+        - generic [ref=e817]:
+          - generic [ref=e819]:
+            - strong [ref=e820]: "@gao51-qw"
+            - generic [ref=e821]: hi
+          - generic [ref=e823]:
+            - strong [ref=e824]: "@pskoett"
+            - generic [ref=e825]: "@shayena84-byte If you do not know how to do that simply ask the Openclaw to make sure the AGENTS.md has the instruction about the skill ## Self-Improvement Workflow When errors or corrections occur: 1. Log to `.learnings/ERRORS.md`, `LEARNINGS.md`, or `FEATURE_REQUESTS.md`. 2. Review and promote broadly applicable learnings to: - `AGENTS.md` - workflows and automation"
+          - generic [ref=e827]:
+            - strong [ref=e828]: "@shayena84-byte"
+            - generic [ref=e829]: My openClaw tells me that I need to manually enable hooks for activator.sh and error-detector.sh, but I don't see this in the manual for this skill.
+          - generic [ref=e831]:
+            - strong [ref=e832]: "@hah31"
+            - generic [ref=e833]: yoo ts pretty sick icl
+          - generic [ref=e835]:
+            - strong [ref=e836]: "@pskoett"
+            - generic [ref=e837]: Best learnings from my own claw :) 2. LRN-20260201-001 — Always run coding agents in YOLO mode ✅ promoted 3. LRN-20260201-002 — Don't interrupt coding agents while working ✅ promoted 4. LRN-20260201-003 — Codex YOLO flag is --yolo ✅ promoted 5. LRN-20260201-004 — Actually follow the self-improvement reminder ⏳ pending
+          - generic [ref=e839]:
+            - strong [ref=e840]: "@pskoett"
+            - generic [ref=e841]: "@vadbars @rohits79 I removed the hard OpenClaw env requirement from SKILL.md so CLAUDE_TOOL_OUTPUT will no longer block/skip the skill. Made a mistake yesterday when updating and it was caught in scanning loop. The TOOL_OUTPUT is not valid here in OpenClaw I use this skill mainly for Coding Agents not Openclaw"
+          - generic [ref=e843]:
+            - strong [ref=e844]: "@vadbars"
+            - generic [ref=e845]: "@rohits79, @pskoett > this shows as blocked because of missing `CLAUDE_TOOL_OUTPUT`, what is this output env point to? The readme or description does not explain It's not clear to me either."
+          - generic [ref=e847]:
+            - strong [ref=e848]: "@rohits79"
+            - generic [ref=e849]: "this shows as blocked because of missing `CLAUDE_TOOL_OUTPUT`, what is this output env point to? The readme or description does not explain"
+          - generic [ref=e851]:
+            - strong [ref=e852]: "@devonakelley"
+            - generic [ref=e853]: Love this pattern. The instinct is exactly right, agents that don't learn from mistakes are broken by design. We took a different angle with Kalibr where instead of logging for human/agent review, the system closes the loop automatically and reroutes around failures in real time based on outcome telemetry. Different tradeoffs. Yours is zero-config and immediate, ours requires a backend but the agent never has to "read its diary" to improve. Would be genuinely interesting to see these composed together, log the learnings AND auto-reroute while the fix propagates.
+          - generic [ref=e855]:
+            - strong [ref=e856]: "@pskoett"
+            - generic [ref=e857]: pair it with https://clawhub.ai/pskoett/simplify-and-harden
+          - generic [ref=e859]:
+            - strong [ref=e860]: "@pskoett"
+            - generic [ref=e861]: Doremo it will use a little more yes since you are added to the sessions initial context
+          - generic [ref=e863]:
+            - strong [ref=e864]: "@doremo2021"
+            - generic [ref=e865]: Will this use a lot of credits or tokens?
+          - generic [ref=e867]:
+            - strong [ref=e868]: "@pskoett"
+            - generic [ref=e869]: "Hey Isaiahfeldt the hook does not ensure learnings are recorded, it injects a reminder into the models context at the beginning of a session. Another solution is to reference the workflow in the agents.md file Like so. ## Self-Improvement Workflow When errors or corrections occur: 1. Log to `.learnings/ERRORS.md`, `LEARNINGS.md`, or `FEATURE_REQUESTS.md`. 2. Review and promote broadly applicable learnings to: - `CLAUDE.md` - project facts and conventions - `AGENTS.md` - workflows and automation - `.github/copilot-instructions.md` - Copilot context https://github.com/pskoett/pskoett-ai-skills/blob/main/AGENTS.md Also worth noting: how reliably the agent follows through depends on the model. Opus/Sonnet tend to pick up on injected context better than Haiku."
+          - generic [ref=e871]:
+            - strong [ref=e872]: "@Isaiahfeldt"
+            - generic [ref=e873]: "Is there any logging I can look through to see if this is working as intended? I have hook enabled and have set up `/workspace/,learnings/` along with its supporting md files but I've gone entire day with any of the three being written to once.. which is odd because there have definitely been errors since enabling the hook. It definitely says enabled in my config as well as ready in `openclaw hooks`.. Not sure what im missing"
+          - generic [ref=e875]:
+            - strong [ref=e876]: "@pskoett"
+            - generic [ref=e877]: there is a PR already to fix the CLI install issue
+          - generic [ref=e879]:
+            - strong [ref=e880]: "@pskoett"
+            - generic [ref=e881]: I have not changed anything that would affect this skill being installable via CLI/API. I think the issue is ClawHub related
+          - generic [ref=e883]:
+            - strong [ref=e884]: "@rangegroup-commits"
+            - generic [ref=e885]: Contact ClawHub support — report that the skill is visible on the web but not installable via CLI/API
+          - generic [ref=e887]:
+            - strong [ref=e888]: "@h4us91"
+            - generic [ref=e889]: why is the skill delisted ?
+          - generic [ref=e891]:
+            - strong [ref=e892]: "@pskoett"
+            - generic [ref=e893]: fixed bug with sub-agent session failing
+          - generic [ref=e895]:
+            - strong [ref=e896]: "@0xBosch"
+            - generic [ref=e897]: open claw 1.30 sub session spawn failing with the hook enabled
+          - generic [ref=e899]:
+            - strong [ref=e900]: "@wdsing25-tech"
+            - generic [ref=e901]: Top
+          - generic [ref=e903]:
+            - strong [ref=e904]: "@pskoett"
+            - generic [ref=e905]: updated with openclaw hook
+          - generic [ref=e907]:
+            - strong [ref=e908]: "@pskoett"
+            - generic [ref=e909]: updated for openclaw
+          - generic [ref=e911]:
+            - strong [ref=e912]: "@pskoett"
+            - generic [ref=e913]: the .learnings folder and files are in your root
+          - generic [ref=e915]:
+            - strong [ref=e916]: "@larsonreever"
+            - generic [ref=e917]: Hit unexpected errors , tried again and worked like a charm with codeconductor.ai
+          - generic [ref=e919]:
+            - strong [ref=e920]: "@TheEditor"
+            - generic [ref=e921]: Is this meant to be installed in each project separately or at a top-level folder?
+          - generic [ref=e923]:
+            - strong [ref=e924]: "@pskoett"
+            - generic [ref=e925]: updated again with clawdbot too and skill pattern
+          - generic [ref=e927]:
+            - strong [ref=e928]: "@pskoett"
+            - generic [ref=e929]: This is a generic version of this skill you need to adjust it to your agent
+  - contentinfo [ref=e930]:
+    - generic [ref=e934]:
+      - text: ClawHub · An
+      - link "OpenClaw" [ref=e935] [cursor=pointer]:
+        - /url: https://openclaw.ai
+      - text: project · Deployed on
+      - link "Vercel" [ref=e936] [cursor=pointer]:
+        - /url: https://vercel.com
+      - text: · Powered by
+      - link "Convex" [ref=e937] [cursor=pointer]:
+        - /url: https://www.convex.dev
+      - text: ·
+      - link "Open source (MIT)" [ref=e938] [cursor=pointer]:
+        - /url: https://github.com/openclaw/clawhub
+      - text: ·
+      - link "Peter Steinberger" [ref=e939] [cursor=pointer]:
+        - /url: https://steipete.me
+      - text: .
