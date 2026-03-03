@@ -1,0 +1,90 @@
+{
+  "team_name": "fullstack-project-team",
+  "created_at": "2026-02-15T09:38:39.089047",
+  "completed_at": "2026-02-15T09:38:39.089093",
+  "summary": {
+    "total_tasks": 9,
+    "completed_tasks": 9,
+    "blocked_tasks": 0,
+    "completion_rate": 1.0,
+    "blocked_ratio": 0.0,
+    "average_quality_pass_rate": 0.94,
+    "average_task_duration": 2.083333333333333e-06,
+    "total_duration_seconds": 4.6e-05,
+    "total_conflicts": 1
+  },
+  "roles_used": [
+    "前端工程师",
+    "后端工程师",
+    "数据库工程师",
+    "测试工程师"
+  ],
+  "ownership_map": {
+    "src/frontend/": [
+      "frontend-dev"
+    ],
+    "src/components/": [
+      "frontend-dev"
+    ],
+    "src/backend/": [
+      "backend-dev"
+    ],
+    "src/api/": [
+      "backend-dev"
+    ],
+    "src/database/": [
+      "db-engineer"
+    ],
+    "migrations/": [
+      "db-engineer"
+    ],
+    "tests/": [
+      "qa-engineer"
+    ],
+    "test-fixtures/": [
+      "qa-engineer"
+    ]
+  },
+  "shared_files": [
+    "src/shared/types.ts",
+    "src/config.py"
+  ],
+  "agents": [
+    {
+      "name": "frontend-dev",
+      "type": "前端工程师",
+      "tasks_count": 2,
+      "completed_tasks": 2,
+      "blocked_tasks": 0,
+      "average_quality_pass_rate": 0.75,
+      "conflicts_detected": 1
+    },
+    {
+      "name": "backend-dev",
+      "type": "后端工程师",
+      "tasks_count": 3,
+      "completed_tasks": 3,
+      "blocked_tasks": 0,
+      "average_quality_pass_rate": 1.0,
+      "conflicts_detected": 0
+    },
+    {
+      "name": "db-engineer",
+      "type": "数据库工程师",
+      "tasks_count": 2,
+      "completed_tasks": 2,
+      "blocked_tasks": 0,
+      "average_quality_pass_rate": 1.0,
+      "conflicts_detected": 0
+    },
+    {
+      "name": "qa-engineer",
+      "type": "测试工程师",
+      "tasks_count": 2,
+      "completed_tasks": 2,
+      "blocked_tasks": 0,
+      "average_quality_pass_rate": 1.0,
+      "conflicts_detected": 0
+    }
+  ]
+}
