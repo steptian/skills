@@ -1,0 +1,43 @@
+{
+  "skill_name": "boss-recruiter",
+  "evals": [
+    {
+      "id": 1,
+      "name": "trigger-test",
+      "prompt": "处理BOSS直聘上的未读招聘消息",
+      "expected_output": "Skill 应该被触发，引导用户使用 web-access 访问聊天列表页面，并开始处理未读消息",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "candidate-screening",
+      "prompt": "我在BOSS直聘上要招一个前端工程师，3年经验，熟悉React，帮我筛选合适的候选人",
+      "expected_output": "Skill 应该引导流程：1. 获取职位信息 2. 访问推荐牛人页面 3. 根据条件筛选候选人 4. 发送邀请",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "full-workflow",
+      "prompt": "帮我在boss直聘上处理今天的招聘工作，先处理未读消息，然后再找10个候选人",
+      "expected_output": "Skill 应该执行完整流程：先处理未读消息并获取简历，再从推荐列表联系10个候选人",
+      "files": []
+    }
+  ],
+  "assertions": [
+    {
+      "eval_id": 1,
+      "name": "skill_triggered",
+      "check": "输出中包含使用 web-access 或访问 zhipin.com 的计划"
+    },
+    {
+      "eval_id": 2,
+      "name": "screening_workflow",
+      "check": "输出包含职位信息获取、候选人筛选、发送邀请的步骤"
+    },
+    {
+      "eval_id": 3,
+      "name": "priority_handling",
+      "check": "输出明确说明先处理未读消息，再处理新候选人"
+    }
+  ]
+}
