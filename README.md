@@ -122,6 +122,40 @@
 
 ---
 
+### git-proxy — Git 网络代理管理
+
+> **类比**：Git 网络问题的"一键开关"，自动检测系统代理
+
+**你是否有这些困扰？**
+
+| 场景 | git-proxy 如何解决 |
+|------|---------------------|
+| 🌐 Git clone/push 超时 | 一键开启代理，自动检测系统配置 |
+| 🔀 HTTP 和 SOCKS 代理切换 | 智能选择 SOCKS5（更快）或 HTTP |
+| ❓ 不知道当前代理状态 | `status` 命令清晰展示 |
+| 🔄 频繁开关代理 | `toggle` 一键切换 |
+
+**快速开始**：
+```bash
+/git-proxy          # 查看状态
+/git-proxy on       # 开启代理（自动检测）
+/git-proxy off      # 关闭代理
+/git-proxy toggle   # 切换状态
+/git-proxy socks    # 强制使用 SOCKS5
+```
+
+**触发方式**（无需命令）：
+> "git 代理设置一下"
+>
+> "切换 git 代理"
+
+**核心能力**：
+- 自动检测系统代理（环境变量 → macOS 网络设置 → 常见端口）
+- 支持 HTTP/SOCKS5 代理
+- 智能优先 SOCKS5（性能更好）
+
+---
+
 ## 安装
 
 ```bash
@@ -135,6 +169,7 @@ ln -sf $(pwd)/daily-plan ~/.claude/skills/daily-plan
 ln -sf $(pwd)/know-keep ~/.claude/skills/know-keep
 ln -sf $(pwd)/task-notify ~/.claude/skills/task-notify
 ln -sf $(pwd)/build-agent-team ~/.claude/skills/build-agent-team
+ln -sf $(pwd)/git-proxy ~/.claude/skills/git-proxy
 ```
 
 ## 目录结构
@@ -154,5 +189,7 @@ skills/
 ├── build-agent-team/    # Agent Team 构建框架
 │   ├── SKILL.md
 │   └── learning_system/ # 团队模板学习模块
+├── git-proxy/           # Git 网络代理管理
+│   └── SKILL.md
 └── README.md
 ```
