@@ -1,13 +1,13 @@
 ---
 name: deploy-pipeline
-description: "阿里云云效流水线部署工具。触发词：'部署上线'、'触发流水线'、'运行pipeline'、'发布到生产'、'执行部署'、'查看部署状态'. 用于自动化触发云效 Flow 流水线，支持多流水线选择、批量执行、状态查询."
+description: "阿里云云效流水线部署工具。触发词：'部署上线'、'触发流水线'、'运行pipeline'、'发布到生产'、'执行部署'、'查看部署状态'. 用于自动化触发云效 Flow 流水线。支持多流水线选择、批量执行、状态查询、飞书通知."
 argument-hint: "[流水线名称或ID]"
 allowed-tools: Read, Grep, Glob, Bash
 ---
 
 # 云效流水线部署 Skill
 
-自动化触发阿里云云效 Flow 流水线，支持配置管理、流水线选择、批量执行和状态查询。
+自动化触发阿里云云效 Flow 流水线，支持配置管理、流水线选择、批量执行、状态查询和飞书通知。
 
 ## 工作流程
 
@@ -53,6 +53,7 @@ allowed-tools: Read, Grep, Glob, Bash
    - 询问用户要运行哪些流水线
    - 调用运行流水线 API
    - 自动查询运行状态并返回结果
+   - **发送飞书通知**（如果 feishu-notify skill 存在）
 
 ### 3. 脚本调用
 
@@ -67,6 +68,12 @@ python3 ~/.claude/skills/deploy-pipeline/scripts/pipeline_api.py list
 # 运行流水线
 python3 ~/.claude/skills/deploy-pipeline/scripts/pipeline_api.py run <pipelineId>
 
+# 运行流水线并发送飞书通知（触发时 + 完成时）
+python3 ~/.claude/skills/deploy-pipeline/scripts/pipeline_api.py run <pipelineId> --notify
+
+# 监控最新运行完成并发送飞书通知
+python3 ~/.claude/skills/deploy-pipeline/scripts/pipeline_api.py watch <pipelineId>
+
 # 查看流水线历史运行记录
 python3 ~/.claude/skills/deploy-pipeline/scripts/pipeline_api.py status <pipelineId>
 
@@ -77,7 +84,24 @@ python3 ~/.claude/skills/deploy-pipeline/scripts/pipeline_api.py latest <pipelin
 python3 ~/.claude/skills/deploy-pipeline/scripts/pipeline_api.py save <pipelineId>
 ```
 
-### 4. 状态说明
+### 4. 飞书通知（可选）
+
+**前提条件**：需要先安装 feishu-notify skill 并配置 Webhook
+
+```bash
+# 配置飞书 Webhook
+mkdir -p ~/.config/feishu-notify
+echo "https://open.feishu.cn/open-apis/bot/v2/hook/xxx" > ~/.config/feishu-notify/feishu_webhook
+```
+
+**通知时机**：
+- 🚀 **触发时**：流水线开始运行
+- ✅ **成功时**：部署成功通知
+- ❌ **失败时**：部署失败通知
+
+**注意**：如果 feishu-notify skill 未安装，，将静默跳过通知，不影响部署流程。
+
+### 5. 状态说明
 
 | 状态 | 说明 |
 |------|------|
@@ -95,28 +119,33 @@ python3 ~/.claude/skills/deploy-pipeline/scripts/pipeline_api.py save <pipelineI
 - "运行生产环境部署" → 直接运行匹配名称的流水线
 - "查看部署状态" → 查询最近一次运行状态
 - "发布到生产" → 执行部署
+- "部署完通知我" → 执行部署并发送飞书通知
 
 响应流程：
 1. 检查配置文件
 2. 展示可用/已配置流水线
 3. 确认要执行的流水线
 4. 调用 API 执行
-5. **自动查询运行状态**
-6. 返回执行结果、状态和详情链接
+5. **发送触发通知**（如果 feishu-notify 存在）
+6. **等待完成**（使用 --notify 或 watch 时）
+7. **发送结果通知**
+8. 返回执行结果、状态和详情链接
 
 ## 输出格式
 
 **触发成功**：
 ```
-🚀 正在触发流水线 123...
+🚀 正在触发流水线 生产环境部署 (123)...
 ✅ 流水线 123 触发成功
    运行 ID: 456
    查看详情: https://flow.aliyun.com/pipelines/123/builds/456
+📤 飞书通知已发送
 ```
 
 **查询状态**：
 ```
 ✅ 流水线 123 最新运行状态:
+
   运行 ID: 456
   状态: SUCCESS
   触发方式: 人工触发
@@ -137,6 +166,7 @@ python3 ~/.claude/skills/deploy-pipeline/scripts/pipeline_api.py save <pipelineI
 4. `.pipeline.json` 是唯一允许在项目中创建的配置文件（可选）
 5. 如果用户只说"部署"但没有指定流水线，展示所有可用流水线让用户选择
 6. **运行流水线后自动查询状态**，让用户知道执行结果
+7. **飞书通知可选**，feishu-notify skill 不存在时静默跳过
 
 ## 错误处理
 
@@ -144,3 +174,4 @@ python3 ~/.claude/skills/deploy-pipeline/scripts/pipeline_api.py save <pipelineI
 - 流水线不存在：提示用户重新获取流水线列表
 - 网络错误：检查服务域名是否正确
 - 权限不足：提示用户检查 Token 权限设置
+- 飞书通知失败：静默跳过，不影响部署流程

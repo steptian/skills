@@ -6,10 +6,13 @@
     python3 pipeline_api.py list                    # 获取流水线列表
     python3 pipeline_api.py list --json             # JSON 格式输出
     python3 pipeline_api.py run <pipelineId>        # 运行流水线
+    python3 pipeline_api.py run <pipelineId> --notify  # 运行并等待完成后飞书通知
+    python3 pipeline_api.py watch <pipelineId>      # 等待最新运行完成并通知
     python3 pipeline_api.py status <pipelineId>     # 查看状态
 """
 
 import json
+import subprocess
 import sys
 import time
 import urllib.request
@@ -24,11 +27,48 @@ DEFAULT_DOMAIN = "openapi-rdc.aliyuncs.com"
 # 全局参数
 JSON_OUTPUT = False
 NON_INTERACTIVE = False
+FEISHU_NOTIFY = False
 
 
 def is_interactive() -> bool:
     """检查是否在交互式终端"""
     return sys.stdin.isatty() and not NON_INTERACTIVE
+
+
+def send_feishu_notification(title: str, content: str) -> bool:
+    """发送飞书通知（如果 feishu-notify skill 存在）"""
+    # 查找飞书通知脚本
+    script_paths = [
+        Path.home() / ".claude/skills/feishu-notify/scripts/feishu_notify.sh",
+        Path("/usr/local/bin/feishu_notify.sh"),
+    ]
+
+    script_path = None
+    for p in script_paths:
+        if p.exists():
+            script_path = p
+            break
+
+    # 飞书通知 skill 不存在时静默跳过
+    if not script_path:
+        return False
+
+    try:
+        result = subprocess.run(
+            [str(script_path), title, content],
+            capture_output=True,
+            text=True,
+            timeout=30
+        )
+        if result.returncode == 0:
+            print("📤 飞书通知已发送")
+            return True
+        else:
+            # 发送失败也静默处理
+            return False
+    except Exception:
+        # 异常也静默处理
+        return False
 
 
 def load_config() -> Dict[str, str]:
@@ -152,10 +192,13 @@ def cmd_list(config: Dict[str, str]) -> List[Dict[str, Any]]:
     return result
 
 
-def cmd_run(config: Dict[str, str], pipeline_ids: List[str]) -> None:
+def cmd_run(config: Dict[str, str], pipeline_ids: List[str], pipeline_names: Dict[str, str] = None) -> None:
     """运行流水线"""
+    pipeline_names = pipeline_names or {}
+
     for pipeline_id in pipeline_ids:
-        print(f"\n🚀 正在触发流水线 {pipeline_id}...")
+        pipeline_name = pipeline_names.get(pipeline_id, f"流水线 {pipeline_id}")
+        print(f"\n🚀 正在触发流水线 {pipeline_name} ({pipeline_id})...")
 
         # 运行流水线不需要额外参数时，body 为空
         result = api_request(config, "POST", f"/pipelines/{pipeline_id}/runs", data={})
@@ -165,6 +208,16 @@ def cmd_run(config: Dict[str, str], pipeline_ids: List[str]) -> None:
         print(f"✅ 流水线 {pipeline_id} 触发成功")
         print(f"   运行 ID: {run_id}")
         print(f"   查看详情: https://flow.aliyun.com/pipelines/{pipeline_id}/builds/{run_id}")
+
+        # 发送飞书通知（触发时）
+        if FEISHU_NOTIFY:
+            send_feishu_notification(
+                f"🚀 部署已触发",
+                f"**{pipeline_name}**\n\n"
+                f"- 流水线 ID: `{pipeline_id}`\n"
+                f"- 运行 ID: `{run_id}`\n"
+                f"- [查看详情](https://flow.aliyun.com/pipelines/{pipeline_id}/builds/{run_id})"
+            )
 
 
 def cmd_status(config: Dict[str, str], pipeline_id: str) -> None:
@@ -229,6 +282,74 @@ def cmd_latest(config: Dict[str, str], pipeline_id: str) -> Dict[str, Any]:
     print(f"\n  🔗 查看详情: https://flow.aliyun.com/pipelines/{pipeline_id}/builds/{pipeline_run_id}\n")
 
     return result
+
+
+def cmd_watch(config: Dict[str, str], pipeline_id: str, run_id: str = None, pipeline_name: str = "") -> None:
+    """等待流水线运行完成并发送飞书通知"""
+    if not pipeline_name:
+        pipeline_name = f"流水线 {pipeline_id}"
+
+    # 如果没有指定 run_id，获取最新的运行
+    if not run_id:
+        result = api_request(config, "GET", f"/pipelines/{pipeline_id}/runs/latestPipelineRun")
+        run_id = result.get("pipelineRunId", "unknown")
+        status = result.get("status", "unknown")
+    else:
+        # 获取指定 run_id 的状态
+        status = "RUNNING"
+
+    print(f"\n👀 正在监控 {pipeline_name} (运行 ID: {run_id})...")
+    print(f"   当前状态: {status}")
+
+    # 状态映射
+    status_icons = {
+        "SUCCESS": "✅",
+        "FAIL": "❌",
+        "RUNNING": "🔄",
+        "WAITING": "⏳",
+        "CANCELED": "⚪"
+    }
+
+    # 等待完成的终端状态
+    terminal_states = {"SUCCESS", "FAIL", "CANCELED"}
+    check_interval = 10  # 检查间隔（秒）
+    max_wait = 1800  # 最大等待时间（30分钟）
+    elapsed = 0
+
+    while status not in terminal_states and elapsed < max_wait:
+        time.sleep(check_interval)
+        elapsed += check_interval
+
+        result = api_request(config, "GET", f"/pipelines/{pipeline_id}/runs/latestPipelineRun")
+        new_status = result.get("status", "unknown")
+
+        if new_status != status:
+            status = new_status
+            icon = status_icons.get(status, "❓")
+            print(f"   {icon} 状态更新: {status}")
+
+    # 最终状态
+    icon = status_icons.get(status, "❓")
+
+    if status == "SUCCESS":
+        print(f"\n{icon} 部署成功！")
+        notify_title = "✅ 部署成功"
+        notify_content = f"**{pipeline_name}** 部署完成\n\n- 运行 ID: `{run_id}`\n- [查看详情](https://flow.aliyun.com/pipelines/{pipeline_id}/builds/{run_id})"
+    elif status == "FAIL":
+        print(f"\n{icon} 部署失败！")
+        notify_title = "❌ 部署失败"
+        notify_content = f"**{pipeline_name}** 部署失败\n\n- 运行 ID: `{run_id}`\n- [查看详情](https://flow.aliyun.com/pipelines/{pipeline_id}/builds/{run_id})"
+    elif status == "CANCELED":
+        print(f"\n{icon} 部署已取消")
+        notify_title = "⚪ 部署已取消"
+        notify_content = f"**{pipeline_name}** 已取消\n\n- 运行 ID: `{run_id}`"
+    else:
+        print(f"\n⏱️ 监控超时（{max_wait // 60}分钟）")
+        notify_title = "⏱️ 部署监控超时"
+        notify_content = f"**{pipeline_name}** 运行时间过长\n\n- 运行 ID: `{run_id}`\n- 当前状态: {status}"
+
+    # 发送飞书通知
+    send_feishu_notification(notify_title, notify_content)
 
 
 def cmd_interactive_run(config: Dict[str, str]) -> None:
@@ -304,7 +425,7 @@ def cmd_save(config: Dict[str, str], pipeline_ids: List[str]) -> None:
 
 
 def main() -> None:
-    global JSON_OUTPUT, NON_INTERACTIVE
+    global JSON_OUTPUT, NON_INTERACTIVE, FEISHU_NOTIFY
 
     # 解析参数
     args = [a for a in sys.argv[1:] if not a.startswith("--")]
@@ -312,6 +433,7 @@ def main() -> None:
 
     JSON_OUTPUT = "--json" in flags
     NON_INTERACTIVE = "--non-interactive" in flags or not sys.stdin.isatty()
+    FEISHU_NOTIFY = "--notify" in flags
 
     if not args:
         print(__doc__)
@@ -319,10 +441,13 @@ def main() -> None:
         print("  python3 pipeline_api.py list")
         print("  python3 pipeline_api.py list --json")
         print("  python3 pipeline_api.py run 123")
+        print("  python3 pipeline_api.py run 123 --notify   # 运行并飞书通知")
+        print("  python3 pipeline_api.py watch 123           # 等待完成并飞书通知")
         print("  python3 pipeline_api.py status 123")
         print("\n选项:")
         print("  --json            JSON 格式输出")
         print("  --non-interactive 非交互模式")
+        print("  --notify          发送飞书通知")
         sys.exit(1)
 
     config = load_config()
@@ -339,7 +464,41 @@ def main() -> None:
                 print("❌ 非交互模式下需要指定流水线 ID")
                 sys.exit(1)
         else:
-            cmd_run(config, args[1:])
+            # 获取流水线名称
+            pipeline_names = {}
+            pipeline_config = load_pipeline_config()
+            if pipeline_config and "pipelines" in pipeline_config:
+                for p in pipeline_config["pipelines"]:
+                    pid = p.get("pipelineId", "")
+                    name = p.get("pipelineName", "")
+                    if pid and name:
+                        pipeline_names[pid] = name
+            cmd_run(config, args[1:], pipeline_names)
+
+            # 如果开启了通知，自动进入监控模式
+            if FEISHU_NOTIFY and args[1:]:
+                for pid in args[1:]:
+                    cmd_watch(config, pid, pipeline_name=pipeline_names.get(pid))
+
+    elif command == "watch":
+        # 监控流水线完成并发送通知
+        if len(args) < 2:
+            print("❌ 请指定流水线 ID")
+            sys.exit(1)
+        FEISHU_NOTIFY = True  # watch 命令自动开启通知
+
+        # 获取流水线名称
+        pipeline_names = {}
+        pipeline_config = load_pipeline_config()
+        if pipeline_config and "pipelines" in pipeline_config:
+            for p in pipeline_config["pipelines"]:
+                pid = p.get("pipelineId", "")
+                name = p.get("pipelineName", "")
+                if pid and name:
+                    pipeline_names[pid] = name
+
+        cmd_watch(config, args[1], pipeline_name=pipeline_names.get(args[1]))
+
     elif command == "status":
         if len(args) < 2:
             print("❌ 请指定流水线 ID")
