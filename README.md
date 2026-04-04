@@ -156,9 +156,60 @@
 
 ---
 
+### deploy-pipeline — 云效流水线部署
+
+> **类比**：CI/CD 的"语音遥控器"，说句话就触发部署
+
+**你是否有这些困扰？**
+
+| 场景 | deploy-pipeline 如何解决 |
+|------|--------------------------|
+| 🖱️ 部署要打开浏览器点半天 | "部署上线" 一句话搞定 |
+| 📋 流水线太多记不住 ID | 自动列出、选择、保存配置 |
+| ❓ 不知道部署成功没有 | 自动查询状态，阶段详情一目了然 |
+| 🔗 多个流水线要逐个点 | 支持批量执行 |
+
+**快速开始**：
+```bash
+/deploy-pipeline          # 查看流水线列表
+/deploy-pipeline run 123  # 运行指定流水线
+/deploy-pipeline latest   # 查看最近状态
+```
+
+**触发方式**（无需命令）：
+> "部署上线"
+>
+> "触发流水线"
+>
+> "发布到生产"
+
+**核心能力**：
+- 自然语言触发（支持中英文）
+- 流水线管理（列表/运行/状态/保存）
+- 阶段详情展示（构建/测试/部署状态）
+- 项目级配置持久化
+
+**配置要求**：
+```bash
+# 创建云效 Token 配置
+cat > ~/.yunxiaorc << 'EOF'
+{
+  "token": "pt-your-token",
+  "domain": "openapi-rdc.aliyuncs.com"
+}
+EOF
+chmod 600 ~/.yunxiaorc
+```
+
+---
+
 ## 安装
 
 ```bash
+# 克隆仓库
+git clone https://github.com/steptian/skills.git
+cd skills
+
 # 安装全部
 for skill in */; do
   ln -sf "$(pwd)/$skill" ~/.claude/skills/"$skill"
@@ -170,6 +221,7 @@ ln -sf $(pwd)/know-keep ~/.claude/skills/know-keep
 ln -sf $(pwd)/task-notify ~/.claude/skills/task-notify
 ln -sf $(pwd)/build-agent-team ~/.claude/skills/build-agent-team
 ln -sf $(pwd)/git-proxy ~/.claude/skills/git-proxy
+ln -sf $(pwd)/deploy-pipeline ~/.claude/skills/deploy-pipeline
 ```
 
 ## 目录结构
@@ -191,5 +243,10 @@ skills/
 │   └── learning_system/ # 团队模板学习模块
 ├── git-proxy/           # Git 网络代理管理
 │   └── SKILL.md
+├── deploy-pipeline/     # 云效流水线部署
+│   ├── SKILL.md
+│   ├── README.md
+│   └── scripts/
+│       └── pipeline_api.py
 └── README.md
 ```

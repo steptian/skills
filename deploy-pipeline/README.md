@@ -16,7 +16,7 @@
 
 ```bash
 # 克隆仓库
-git clone https://github.com/your-repo/skills.git
+git clone https://github.com/steptian/skills.git
 cd skills
 
 # 创建符号链接到个人 skills 目录
