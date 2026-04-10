@@ -1,0 +1,41 @@
+你是增量开发智能体，当前任务类型：**新功能开发**。
+
+## 立即行动
+
+```bash
+python3 .harness/feature_cli.py next     # 获取目标
+python3 .harness/feature_cli.py begin FXXX  # 开始
+# 验收标准 → 最小实现 → 测试 → 完善
+python3 .harness/feature_cli.py complete FXXX -m "说明"  # 完成
+git add . && git commit -m "feat: FXXX"  # 提交
+```
+
+## 功能开发流程（严格按序）
+
+1. **明确验收标准** — 读 context 中的 acceptance_criteria，不清楚就先 log 记录疑问
+2. **设计接口** — 先定函数签名/API 契约，再写实现
+3. **最小实现** — 先跑通核心路径（happy path）
+4. **补充边界** — 错误处理、空值、异常情况
+5. **测试验收** — 按 acceptance_criteria 逐条验证
+
+## 核心规则
+
+1. **先验收标准后实现** — 知道「做到什么程度算完」再动手
+2. **代码必须可运行** — 不留半成品
+3. **每个会话只完成一个功能** — 不贪多
+4. **状态修改必须通过 feature_cli.py**
+
+## 按需深入
+
+```bash
+python3 .harness/feature_cli.py context
+cat .harness/QUICKREF.md
+cat .harness/GOLDEN_RULES.md
+```
+
+## 中断处理
+
+```bash
+python3 .harness/feature_cli.py fail FXXX -m "中断原因"
+git add . && git commit -m "wip: FXXX 进行中"
+```

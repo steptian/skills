@@ -1,0 +1,11 @@
+{
+  "layers": ["types", "config", "repo", "service", "api", "ui"],
+  "rules": {
+    "api": ["service", "types", "config"],
+    "service": ["repo", "types", "config"],
+    "repo": ["types", "config"],
+    "ui": ["api", "types"]
+  },
+  "enforce": true,
+  "description": "架构分层配置。layers 定义分层顺序，rules 定义每层允许依赖的层。"
+}

@@ -1,0 +1,76 @@
+{
+  "description": "自动沉淀的失败反模式库。每次 fail 时根据中断原因关键词自动归类。",
+  "categories": {
+    "context_exhausted": {
+      "label": "上下文耗尽",
+      "keywords": [
+        "上下文",
+        "context",
+        "token",
+        "窗口不足"
+      ],
+      "countermeasure": "拆分更小的子任务；先 log 当前进度再 fail；下次会话优先读 context 输出"
+    },
+    "dependency_missing": {
+      "label": "依赖缺失",
+      "keywords": [
+        "依赖",
+        "dependency",
+        "import",
+        "module not found",
+        "包未安装"
+      ],
+      "countermeasure": "在 begin 前检查 env；使用 preflight 确认工具链完整"
+    },
+    "tool_unavailable": {
+      "label": "工具不可用",
+      "keywords": [
+        "command not found",
+        "工具",
+        "tool",
+        "找不到命令"
+      ],
+      "countermeasure": "在 preflight 中加入该工具检测；提前安装"
+    },
+    "test_failure": {
+      "label": "测试不通过",
+      "keywords": [
+        "测试",
+        "test",
+        "assert",
+        "失败",
+        "error"
+      ],
+      "countermeasure": "先复现失败用例；定位根因再修复；不要猜测性修改"
+    },
+    "prompt_ambiguity": {
+      "label": "需求/提示不清晰",
+      "keywords": [
+        "不清楚",
+        "歧义",
+        "需求不明",
+        "unclear",
+        "ambiguous"
+      ],
+      "countermeasure": "在 features.json 中补充 acceptance_criteria；使用更具体的 steps"
+    },
+    "external_blocked": {
+      "label": "外部阻塞",
+      "keywords": [
+        "阻塞",
+        "blocked",
+        "等待",
+        "API",
+        "网络",
+        "超时"
+      ],
+      "countermeasure": "使用 fail --blocked 标记；记录阻塞的外部依赖；设置提醒"
+    },
+    "unknown": {
+      "label": "未分类",
+      "keywords": [],
+      "countermeasure": "人工审查中断原因，补充分类关键词"
+    }
+  },
+  "history": []
+}

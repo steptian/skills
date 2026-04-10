@@ -1,0 +1,8 @@
+{
+  "max_sessions": 10,
+  "stale_hours": 24,
+  "auto_commit": true,
+  "claude_args": "--dangerously-skip-permissions",
+  "interactive": true,
+  "auto_confirm": false
+}

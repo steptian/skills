@@ -1,0 +1,11 @@
+{
+  "id": "T003",
+  "name": "重构超长 Python 脚本",
+  "category": "refactor",
+  "difficulty": "medium",
+  "description": "项目中有一个 monolith.py 文件超过 500 行，包含数据读取、处理和输出三大块逻辑。请将其按职责拆分为 reader.py、processor.py、writer.py 三个模块，并保证 main.py 能正常调用。",
+  "acceptance_check": "test -f reader.py && test -f processor.py && test -f writer.py && python3 -c 'import reader; import processor; import writer'",
+  "expected_files": ["reader.py", "processor.py", "writer.py", "main.py"],
+  "max_turns": 15,
+  "tags": ["refactor", "python", "medium"]
+}

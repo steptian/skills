@@ -1,0 +1,11 @@
+{
+  "id": "T001",
+  "name": "创建一个简单的 Claude Code Skill",
+  "category": "feature",
+  "difficulty": "easy",
+  "description": "创建一个名为 hello-world 的 Claude Code Skill，包含 SKILL.md（frontmatter + 简单指令）和 README.md。触发词为 'hello' 和 '你好'，功能是回复一段友好的问候语。",
+  "acceptance_check": "test -f hello-world/SKILL.md && grep -q 'hello' hello-world/SKILL.md",
+  "expected_files": ["hello-world/SKILL.md", "hello-world/README.md"],
+  "max_turns": 10,
+  "tags": ["skill", "easy"]
+}

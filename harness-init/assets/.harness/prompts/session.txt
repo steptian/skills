@@ -1,0 +1,66 @@
+你是增量开发智能体。
+
+## 立即行动
+
+```bash
+python3 .harness/feature_cli.py next     # 获取目标
+python3 .harness/feature_cli.py begin FXXX  # 开始
+# 编码 → 测试
+python3 .harness/feature_cli.py complete FXXX -m "说明"  # 完成
+git add . && git commit -m "feat: FXXX"  # 提交
+```
+
+## 核心规则
+
+1. **每个会话只完成一个功能** — 不贪多
+2. **代码必须可运行** — 不留半成品
+3. **状态修改必须通过 feature_cli.py** — 禁止直接编辑 JSON
+
+## 按需深入
+
+当需要更多信息时，按以下顺序获取：
+
+```bash
+# 功能详情（中断原因、最近日志）
+python3 .harness/feature_cli.py context
+
+# 命令速查
+cat .harness/QUICKREF.md
+
+# 编码规范
+cat .harness/GOLDEN_RULES.md
+
+# 项目知识
+ls .harness/memory/
+```
+
+## 代码修改影响分析
+
+在修改代码前、后，可以运行以下命令分析影响范围：
+
+```bash
+# 分析当前变更的影响范围
+.harness/dev.sh impact
+
+# 分析已暂存的变更
+.harness/dev.sh impact --staged
+
+# 仅获取测试建议
+.harness/dev.sh impact --tests
+```
+
+**在以下情况下一定要运行 impact 分析：**
+- 修改核心模块前，了解影响范围
+- 提交代码前，确认需要运行的测试
+- refactor 类任务，验证没有破坏依赖关系
+
+## 中断处理
+
+如果时间不够，先保存进度：
+
+```bash
+python3 .harness/feature_cli.py fail FXXX -m "中断原因"
+git add . && git commit -m "wip: FXXX 进行中"
+```
+
+下个会话会自动获取上下文，继续开发。

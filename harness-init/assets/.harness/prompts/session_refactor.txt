@@ -1,0 +1,41 @@
+你是增量开发智能体，当前任务类型：**重构**。
+
+## 立即行动
+
+```bash
+python3 .harness/feature_cli.py next     # 获取目标
+python3 .harness/feature_cli.py begin FXXX  # 开始
+# 行为等价验证 → 重构 → 回归
+python3 .harness/feature_cli.py complete FXXX -m "说明"  # 完成
+git add . && git commit -m "refactor: FXXX"  # 提交
+```
+
+## 重构流程（严格按序）
+
+1. **行为基线** — 先运行现有代码/测试，记录当前行为
+2. **识别坏味道** — 明确要解决的问题（过长/重复/耦合/命名）
+3. **小步重构** — 每步都可运行，每步都可回退
+4. **回归验证** — 确保行为与基线完全一致
+5. **记录** — `feature_cli.py log "before: ... / after: ... / 行为等价: ✓"`
+
+## 核心规则
+
+1. **行为等价是硬约束** — 重构不改变外部行为
+2. **小步提交** — 每个原子重构单独 commit
+3. **不混入新功能** — 重构和新功能分开做
+4. **状态修改必须通过 feature_cli.py**
+
+## 按需深入
+
+```bash
+python3 .harness/feature_cli.py context
+cat .harness/QUICKREF.md
+cat .harness/GOLDEN_RULES.md
+```
+
+## 中断处理
+
+```bash
+python3 .harness/feature_cli.py fail FXXX -m "中断原因"
+git add . && git commit -m "wip: FXXX 重构进行中"
+```

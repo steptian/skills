@@ -1,0 +1,64 @@
+# 项目开发规范
+
+## 功能开发工具
+
+使用 `.harness/feature_cli.py` 管理开发进度。
+
+### 核心命令（必须遵守的格式）
+
+```bash
+# 开始开发功能
+python3 .harness/feature_cli.py begin <FEATURE_ID>
+
+# 记录进度（注意：不需要 FEATURE_ID，自动关联当前会话）
+python3 .harness/feature_cli.py log "进度说明"
+
+# 完成功能
+python3 .harness/feature_cli.py complete <FEATURE_ID> -m "完成说明"
+
+# 中断功能
+python3 .harness/feature_cli.py fail <FEATURE_ID> -m "中断原因"
+```
+
+### ⚠️ 常见错误
+
+❌ **错误**：`log` 命令加 FEATURE_ID
+```bash
+python3 .harness/feature_cli.py log F025 "开始开发"  # 错误！
+```
+
+✅ **正确**：`log` 命令只需要消息
+```bash
+python3 .harness/feature_cli.py log "开始开发"  # 正确
+```
+
+### 标准工作流
+
+```bash
+1. python3 .harness/feature_cli.py next          # 获取下一个功能
+2. python3 .harness/feature_cli.py begin F001    # 开始开发
+3. # 编写代码...
+4. python3 .harness/feature_cli.py log "完成XX"  # 记录进度
+5. python3 .harness/feature_cli.py complete F001 -m "全部完成"
+```
+
+## 按需深入
+
+当需要更多信息时，按以下顺序获取：
+
+```bash
+# 功能详情（中断原因、最近日志）
+python3 .harness/feature_cli.py context
+
+# 完整工具文档
+cat .harness/INSTRUCTIONS.md
+
+# 项目知识
+ls .harness/memory/          # 结构/接口/决策等
+```
+
+## 相关文档
+
+- **快速参考**：`.harness/QUICKREF.md`
+- **完整文档**：`.harness/INSTRUCTIONS.md`
+- **需求文档**：`.harness/requirements.md`

@@ -1,0 +1,77 @@
+# AGENTS.md
+
+> 本文件是智能体理解项目的第一入口。保持精简，指向更多信息源。
+
+## 项目
+
+{{PROJECT_NAME}} - {{PROJECT_DESCRIPTION}}
+
+## 快速开始
+
+```bash
+.harness/dev.sh status   # 查看进度
+.harness/dev.sh run      # 自动开发循环
+cat .harness/QUICKREF.md # 命令速查
+```
+
+## 架构
+
+```
+{{ARCHITECTURE_OVERVIEW}}
+```
+
+详细文档：`docs/architecture.md`（如存在）
+
+## 黄金原则
+
+核心约束（详见 `.harness/GOLDEN_RULES.md`）：
+
+- **分层调用**：API → Service → Repo，不跨层访问
+- **边界验证**：入参必须校验，禁止 YOLO 式探测
+- **错误处理**：外部调用必须有超时
+
+## 关键目录
+
+| 目录 | 职责 |
+|------|------|
+| {{KEY_DIRECTORIES}} |
+
+## 当前焦点
+
+查看实时状态：`.harness/dev.sh status`
+
+---
+
+## 智能体指南
+
+### 开发流程
+
+1. 获取任务：`python3 .harness/feature_cli.py next`
+2. 开始开发：`python3 .harness/feature_cli.py begin FXXX`
+3. 编码 + 测试
+4. 完成提交：`complete` + `git commit`
+
+### 遇到问题时
+
+```bash
+# 查看功能详情
+python3 .harness/feature_cli.py context
+
+# 查看项目记忆
+cat .harness/memory/structure.md   # 代码结构
+cat .harness/memory/interfaces.md  # 接口文档
+cat .harness/memory/decisions.md   # 设计决策
+
+# 检查代码规范
+.harness/dev.sh lint
+```
+
+### 记录知识
+
+```bash
+# 记录设计决策
+.harness/dev.sh remember "决策主题" "决策原因"
+
+# 查看记忆状态
+.harness/dev.sh memory status
+```
