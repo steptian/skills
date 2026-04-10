@@ -4,6 +4,40 @@
 
 ## Skills 列表
 
+### harness-init — AI 驱动的项目开发框架
+
+> **一句话**：给任何项目装上标准化的 AI 开发工作流，从需求到交付全自动管理
+
+| 痛点 | harness-init 如何解决 |
+|------|----------------------|
+| 项目开发流程不统一 | 一键初始化标准框架，需求→开发→测试一条龙 |
+| Claude 多次会话间状态丢失 | 功能状态机 + 会话记录，断点续开发 |
+| 改了代码不知道影响了哪里 | 变更影响范围分析 + 测试覆盖建议 |
+| 技术债越积越多 | 自动扫描 + 代码规范检查 |
+
+**快速开始**：
+```bash
+/harness-init              # 初始化新项目
+/harness-init 更新         # 检查/更新框架版本
+```
+
+**核心命令**：
+```bash
+.harness/dev.sh plan       # 从需求生成功能清单
+.harness/dev.sh run        # 自动循环开发
+.harness/dev.sh impact     # 代码变更影响分析
+.harness/dev.sh lint       # 代码规范检查
+.harness/dev.sh doctor     # 项目健康检查
+```
+
+**核心能力**：
+- 安全更新（用户数据完整保留 + 版本比对）
+- 代码变更影响分析（依赖链 + 风险评估 + 测试建议）
+- 按任务类型分流 prompt（bugfix/feature/refactor）
+- 环境快照注入（减少探索性轮次）
+
+---
+
 ### daily-plan — AI 驱动的 GTD + 复盘系统
 
 > **类比**：GTD × 时间块 × 数据复盘，由 Claude 智能编排
@@ -216,6 +250,7 @@ for skill in */; do
 done
 
 # 或单独安装
+ln -sf $(pwd)/harness-init ~/.claude/skills/harness-init
 ln -sf $(pwd)/daily-plan ~/.claude/skills/daily-plan
 ln -sf $(pwd)/know-keep ~/.claude/skills/know-keep
 ln -sf $(pwd)/task-notify ~/.claude/skills/task-notify
@@ -228,6 +263,11 @@ ln -sf $(pwd)/deploy-pipeline ~/.claude/skills/deploy-pipeline
 
 ```
 skills/
+├── harness-init/        # 项目开发框架
+│   ├── SKILL.md
+│   ├── README.md
+│   ├── reference.md
+│   └── assets/.harness/ # 框架源文件
 ├── daily-plan/          # 每日待办计划
 │   ├── SKILL.md
 │   ├── reference.md
