@@ -251,3 +251,44 @@ git add path/to/file.py
 - **QUICKREF.md**：快速参考手册
 - **feature_cli.py**：所有状态操作必须通过此工具
 - **impact_analyzer.py**：代码变更影响范围分析器（新增）
+
+---
+
+## 经验反思与规则进化（v2.3.0 新增）
+
+### learn 命令 — 记录经验教训
+
+```bash
+# 记录一条教训
+python3 .harness/feature_cli.py learn \
+  --category "debugging" \
+  --confidence 8 \
+  --lesson "修改配置前先备份" \
+  --context "直接改 config.json 导致格式损坏" \
+  --feature-id F003
+
+# 类别：debugging | architecture | workflow | testing | optimization
+# 信心度：1-10，越高越确定普遍适用
+```
+
+教训存储在 `.harness/memory/learnings.json`，最多 100 条，自动淘汰低价值条目。
+
+### 自动反思
+
+`complete` 命令执行后，如果本次会话有日志记录，会自动输出反思提示（stderr）。
+Claude 在场时会读取会话日志、提取教训、通过 `learn` 命令写入。
+
+### begin 时注入教训
+
+`begin` 命令执行后，自动加载最近 5 条高信心度（>=6）的历史教训，
+帮助新会话站在之前的经验基础上。
+
+### evolve 命令 — 规则进化建议
+
+```bash
+# 查看规则进化建议
+python3 .harness/feature_cli.py evolve
+```
+
+扫描 `learnings.json` 和 `anti_patterns.json`，当同类教训出现 3 次以上时，
+建议在 `GOLDEN_RULES.md` 中新增或强化规则。仅输出建议，不自动修改。

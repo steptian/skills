@@ -64,3 +64,28 @@ git add . && git commit -m "wip: FXXX 进行中"
 ```
 
 下个会话会自动获取上下文，继续开发。
+
+## 会话结束反思
+
+当看到 `--- REFLECTION NEEDED ---` 标记时，执行以下步骤：
+
+1. 运行 `feature_cli.py context` 获取本次会话完整日志
+2. 回顾开发过程，提取 1-3 条教训（踩坑、有效做法、架构发现）
+3. 对每条教训运行：
+   ```bash
+   python3 .harness/feature_cli.py learn \
+     --feature-id <FEATURE_ID> \
+     --category "debugging" \
+     --confidence 8 \
+     --lesson "一句话教训" \
+     --context "具体场景描述"
+   ```
+   - **category**: debugging | architecture | workflow | testing | optimization
+   - **confidence**: 1-10，越高越确定这个教训普遍适用
+4. 运行 `feature_cli.py log "反思完成：{教训摘要}"`
+
+### 教训提取标准
+
+- **要提取**: 踩坑经验、有效做法、架构发现、调试技巧、效率提升
+- **不提取**: 显而易见的常识、一次性细节、项目特定配置
+- **不要强行提取**: 如果这次开发很顺利没有特别值得记录的，可以跳过

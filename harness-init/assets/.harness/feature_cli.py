@@ -35,6 +35,7 @@ from lib import (
     cmd_deps, cmd_unblock, cmd_config, cmd_report, cmd_add, cmd_remember,
     cmd_memory, cmd_doctor,
 )
+from lib.learnings import cmd_learn, cmd_evolve
 
 
 def main():
@@ -109,6 +110,17 @@ def main():
 
     sub.add_parser('doctor', help='项目健康检查')
 
+    p = sub.add_parser('learn', help='记录经验教训')
+    p.add_argument('--category', '-c', required=True,
+                   choices=['debugging', 'architecture', 'workflow', 'testing', 'optimization'],
+                   help='教训类别')
+    p.add_argument('--confidence', type=int, required=True, help='信心度 1-10')
+    p.add_argument('--lesson', '-l', required=True, help='一句话教训')
+    p.add_argument('--context', help='具体场景描述')
+    p.add_argument('--feature-id', help='关联的功能 ID')
+
+    sub.add_parser('evolve', help='分析经验教训，建议规则进化')
+
     args = parser.parse_args()
     if not args.command:
         parser.print_help()
@@ -122,6 +134,7 @@ def main():
         'deps': cmd_deps, 'unblock': cmd_unblock, 'config': cmd_config,
         'report': cmd_report, 'add': cmd_add, 'remember': cmd_remember,
         'memory': cmd_memory, 'doctor': cmd_doctor,
+        'learn': cmd_learn, 'evolve': cmd_evolve,
     }
     dispatch[args.command](args)
 

@@ -214,6 +214,10 @@ def cmd_begin(args):
         return data
     locked_update(updater)
 
+    # 注入历史教训（只读，不影响 features.json）
+    from .learnings import inject_learnings_to_stdout
+    inject_learnings_to_stdout()
+
 
 def cmd_complete(args):
     def updater(data):
@@ -230,14 +234,25 @@ def cmd_complete(args):
             print(f"{C.R}错误: 找不到功能 {fid}{C.N}", file=sys.stderr)
             return data
 
+        session_logs = []
         for s in reversed(data.get('sessions', [])):
             if s.get('feature_id') == fid and s.get('status') == 'running':
                 s['status'] = 'completed'
                 s['ended_at'] = datetime.now().isoformat()
                 if args.message:
                     s['logs'].append(format_log_entry(args.message, "complete"))
+                session_logs = s.get('logs', [])
                 break
         print(f"{C.G}✓ 功能 {fid} 已完成{C.N}")
+
+        # 反思提示：仅在 Claude Code 会话内且有日志时触发
+        if session_logs:
+            print(f"\n--- REFLECTION NEEDED ---", file=sys.stderr)
+            print(f"FEATURE_ID={fid}", file=sys.stderr)
+            print(f"Session logs: {len(session_logs)} entries", file=sys.stderr)
+            print(f"Run 'feature_cli.py context' for details", file=sys.stderr)
+            print(f"Reflect and save via: feature_cli.py learn --feature-id {fid} ...", file=sys.stderr)
+            print(f"--- END REFLECTION ---", file=sys.stderr)
         return data
     locked_update(updater)
 
