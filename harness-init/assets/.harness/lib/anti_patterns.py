@@ -7,6 +7,7 @@ from datetime import datetime
 from pathlib import Path
 
 from .core import MEMORY_DIR
+from .atomic_io import safe_write_json
 
 ANTI_PATTERNS_FILE = MEMORY_DIR / "anti_patterns.json"
 
@@ -53,4 +54,4 @@ def record_anti_pattern(feature_id: str, message: str, is_blocked: bool):
     ap_data.setdefault("history", []).append(entry)
 
     with open(ANTI_PATTERNS_FILE, 'w', encoding='utf-8') as f:
-        json.dump(ap_data, f, ensure_ascii=False, indent=2)
+        safe_write_json(ANTI_PATTERNS_FILE, ap_data)

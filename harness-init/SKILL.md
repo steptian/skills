@@ -73,16 +73,49 @@ else
 fi
 ```
 
-### Step 3: 询问需求
+### Step 3: 渐进式需求收集
+
+检查 `.harness/.onboarding.json` 判断当前引导阶段：
+
+```bash
+if [ -f ".harness/.onboarding.json" ]; then
+  PHASE=$(python3 -c "import json; print(json.load(open('.harness/.onboarding.json')).get('phase', 1))")
+else
+  PHASE=1
+fi
+echo "引导阶段: Phase $PHASE"
+```
+
+根据阶段执行对应收集：
+
+**Phase 1 — 基础信息（首次运行，必答）**
 
 使用 AskUserQuestion 收集：
-1. **项目基本信息**：项目名称、描述、技术栈
-2. **核心功能需求**：主要功能列表
-3. **非功能需求**（可选）：性能、安全要求
+- **项目名称**：简短标识
+- **一句话描述**：项目做什么
 
-### Step 4: 更新 requirements.md 并选择初始化方式
+收集后更新文件并推进阶段：
+```bash
+# 更新 .harness/memory/project.json 中的 name 和 description
+# 更新 AGENTS.md 占位符 {{PROJECT_NAME}} 和 {{PROJECT_DESCRIPTION}}
+# 更新 .harness/.onboarding.json: {"phase": 2, "project_name": "...", "project_description": "..."}
+```
 
-填充 `.harness/requirements.md`，然后让用户选择：
+**Phase 2 — 功能需求（第二次触发）**
+
+使用 AskUserQuestion 收集：
+- **核心功能列表**：主要功能点（3-5 个）
+- **技术栈偏好**：Python/Node.js/其他
+
+收集后更新 `.harness/requirements.md` 并推进阶段：
+```bash
+# 将功能列表写入 .harness/requirements.md
+# 更新 .harness/.onboarding.json: {"phase": 3, ...}
+```
+
+**Phase 3 — 初始化方式选择（第三次触发）**
+
+让用户选择初始化方式：
 
 | 方式 | 命令 | 适用场景 |
 |------|------|----------|
@@ -90,9 +123,9 @@ fi
 | **migrate** | `.harness/dev.sh migrate` | 从现有代码库迁移（已有代码） |
 | **env** | `.harness/dev.sh env` | 仅初始化开发环境 |
 
-执行选择后，提示用户提交 git：
-
+执行选择后，更新阶段并提交 git：
 ```bash
+# 更新 .harness/.onboarding.json: {"phase": "done", ...}
 git add .harness AGENTS.md CLAUDE.md
 git commit -m "feat: 初始化 harness 开发框架"
 ```

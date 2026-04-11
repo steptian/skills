@@ -13,7 +13,7 @@ from .core import (
     C, HARNESS_DIR, MEMORY_DIR, CONFIG,
     safe_load, locked_update, format_log_entry, log_display,
 )
-from .anti_patterns import record_anti_pattern
+from .anti_patterns import record_anti_pattern, classify_failure
 
 
 def cmd_status(_args):
@@ -167,6 +167,55 @@ def cmd_pending_count(_args):
     print(count)
 
 
+def _silent_stale_cleanup():
+    """静默清理僵尸会话，返回清理数量（不打印详细列表）。"""
+    from .core import CONFIG
+    stale_hours = CONFIG.get('stale_hours', 24)
+
+    def cleanup_updater(data):
+        now = datetime.now()
+        features = data.get('features', [])
+        sessions = data.get('sessions', [])
+        cleaned = 0
+
+        for f in features:
+            if f.get('status') != 'in_progress':
+                continue
+            feature_sessions = [s for s in sessions if s.get('feature_id') == f['id']]
+            if not feature_sessions:
+                continue
+            latest_session = feature_sessions[-1]
+            session_time = latest_session.get('started_at') or latest_session.get('ended_at')
+            if session_time:
+                try:
+                    last_update = datetime.fromisoformat(session_time)
+                    if (now - last_update).total_seconds() / 3600 > stale_hours:
+                        f['interrupt_reason'] = f"自动检测: 会话超时（>{stale_hours}h）"
+                        for s in reversed(sessions):
+                            if s.get('feature_id') == f['id'] and s.get('status') == 'running':
+                                s['status'] = 'interrupted'
+                                s['ended_at'] = now.isoformat()
+                                s['logs'].append(format_log_entry("会话超时，自动清理", "auto_stale"))
+                                break
+                        cleaned += 1
+                except (ValueError, TypeError):
+                    pass
+        data['_stale_cleaned'] = cleaned
+        return data
+
+    data = locked_update(cleanup_updater)
+    return data.get('_stale_cleaned', 0)
+
+
+def _get_feature_category(fid):
+    """获取功能的 category 字段。"""
+    data = safe_load()
+    for f in data.get('features', []):
+        if f['id'] == fid:
+            return f.get('category', '')
+    return ''
+
+
 def cmd_begin(args):
     def updater(data):
         fid = args.feature_id
@@ -214,9 +263,52 @@ def cmd_begin(args):
         return data
     locked_update(updater)
 
-    # 注入历史教训（只读，不影响 features.json）
+    # 检查 begin 是否成功：验证当前 feature 是否有 running 会话
+    current = safe_load()
+    has_running = any(
+        s.get('status') == 'running' and s.get('feature_id') == args.feature_id
+        for s in current.get('sessions', [])
+    )
+    if not has_running:
+        return
+
+    # === Preamble ===
+    from .core import check_for_update
+
+    # 1. 版本检查
+    update_info = check_for_update()
+    if update_info['has_update']:
+        version_line = f"{update_info['current']} → {update_info['latest']} ⚠"
+    else:
+        version_line = f"{update_info['current']} ✓"
+
+    # 2. 僵尸会话清理（静默）
+    stale_cleaned = _silent_stale_cleanup()
+
+    # 3. 经验注入（带 category 过滤）
     from .learnings import inject_learnings_to_stdout
-    inject_learnings_to_stdout()
+    feature_category = _get_feature_category(args.feature_id)
+    injected_count = inject_learnings_to_stdout(category_filter=feature_category)
+
+    # 4. 输出结构化 Preamble
+    print(f"\n--- PREAMBLE ---", file=sys.stderr)
+    print(f"  [版本] {version_line}", file=sys.stderr)
+    print(f"  [僵尸] 已清理 {stale_cleaned} 个过期会话", file=sys.stderr)
+    print(f"  [教训] 已注入 {injected_count} 条相关经验", file=sys.stderr)
+    print(f"--- END PREAMBLE ---", file=sys.stderr)
+
+    # 5. 写入当前会话状态文件
+    current_data = safe_load()
+    running_sessions = [s for s in current_data.get('sessions', []) if s.get('status') == 'running' and s.get('feature_id') == args.feature_id]
+    if running_sessions:
+        from .atomic_io import safe_write_json
+        latest = running_sessions[-1]
+        safe_write_json(HARNESS_DIR / ".current-session.json", {
+            "session_id": latest['id'],
+            "feature_id": args.feature_id,
+            "status": "running",
+            "started_at": latest.get('started_at', ''),
+        })
 
 
 def cmd_complete(args):
@@ -235,6 +327,7 @@ def cmd_complete(args):
             return data
 
         session_logs = []
+        session_info = {}
         for s in reversed(data.get('sessions', [])):
             if s.get('feature_id') == fid and s.get('status') == 'running':
                 s['status'] = 'completed'
@@ -242,16 +335,31 @@ def cmd_complete(args):
                 if args.message:
                     s['logs'].append(format_log_entry(args.message, "complete"))
                 session_logs = s.get('logs', [])
+                session_info = s
                 break
         print(f"{C.G}✓ 功能 {fid} 已完成{C.N}")
 
-        # 反思提示：仅在 Claude Code 会话内且有日志时触发
+        # 结构化反思输出（stderr，供 Claude 解析）
         if session_logs:
+            error_count = sum(1 for l in session_logs if isinstance(l, dict) and l.get('type') == 'error')
+            decision_count = sum(1 for l in session_logs if isinstance(l, dict) and l.get('type') == 'decision')
+            elapsed_min = ""
+            started = session_info.get('started_at')
+            if started:
+                try:
+                    elapsed_min = f"{(datetime.now() - datetime.fromisoformat(started)).total_seconds() / 60:.0f}"
+                except (ValueError, TypeError):
+                    pass
+
             print(f"\n--- REFLECTION NEEDED ---", file=sys.stderr)
             print(f"FEATURE_ID={fid}", file=sys.stderr)
-            print(f"Session logs: {len(session_logs)} entries", file=sys.stderr)
-            print(f"Run 'feature_cli.py context' for details", file=sys.stderr)
-            print(f"Reflect and save via: feature_cli.py learn --feature-id {fid} ...", file=sys.stderr)
+            print(f"SESSION_ID={session_info.get('id', '?')}", file=sys.stderr)
+            print(f"LOG_COUNT={len(session_logs)}", file=sys.stderr)
+            print(f"ERROR_COUNT={error_count}", file=sys.stderr)
+            print(f"DECISION_COUNT={decision_count}", file=sys.stderr)
+            if elapsed_min:
+                print(f"ELAPSED_MINUTES={elapsed_min}", file=sys.stderr)
+            print(f"ACTION=Run 'feature_cli.py learn --feature-id {fid} --category <CATEGORY> --lesson \"<LESSON>\"' to save learnings", file=sys.stderr)
             print(f"--- END REFLECTION ---", file=sys.stderr)
         return data
     locked_update(updater)
@@ -305,6 +413,17 @@ def cmd_fail(args):
             print(f"{C.Y}⚠ 功能 {fid} 已中断（第{actual_count}次），下次会话将继续{C.N}")
 
         record_anti_pattern(fid, args.message or "", is_blocked)
+
+        # 结构化反思输出
+        ap_category = classify_failure(args.message or "") if not is_blocked else "external_blocked"
+        print(f"\n--- REFLECTION NEEDED ---", file=sys.stderr)
+        print(f"FEATURE_ID={fid}", file=sys.stderr)
+        print(f"INTERRUPT_COUNT={actual_count}", file=sys.stderr)
+        print(f"ANTI_PATTERN_CATEGORY={ap_category}", file=sys.stderr)
+        if args.message:
+            print(f"INTERRUPT_REASON={args.message}", file=sys.stderr)
+        print(f"ACTION=Run 'feature_cli.py learn --feature-id {fid} --category workflow --lesson \"<LESSON>\"' to save learnings", file=sys.stderr)
+        print(f"--- END REFLECTION ---", file=sys.stderr)
         return data
     locked_update(updater)
 
@@ -315,7 +434,14 @@ def cmd_log(args):
     def updater(data):
         for s in reversed(data.get('sessions', [])):
             if s.get('status') == 'running':
-                s['logs'].append(format_log_entry(args.message, log_type))
+                entry = format_log_entry(args.message, log_type)
+                s['logs'].append(entry)
+
+                # 双写到 JSONL 文件（向后兼容）
+                from .atomic_io import append_jsonl
+                session_logs_dir = HARNESS_DIR / "logs" / "sessions"
+                append_jsonl(session_logs_dir / f"{s['id']}.jsonl", entry)
+
                 print(f"已记录到 {s['id']}")
                 return data
         print(f"{C.Y}警告: 没有运行中的会话，日志未记录{C.N}", file=sys.stderr)

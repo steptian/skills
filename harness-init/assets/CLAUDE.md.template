@@ -62,3 +62,24 @@ ls .harness/memory/          # 结构/接口/决策等
 - **快速参考**：`.harness/QUICKREF.md`
 - **完整文档**：`.harness/INSTRUCTIONS.md`
 - **需求文档**：`.harness/requirements.md`
+
+## Harness 路由规则
+
+当用户的意图匹配以下场景时，应自动使用对应的 harness 命令，不要直接回答：
+
+| 触发场景 | 命令 | 说明 |
+|---------|------|------|
+| 开始新功能开发 | `begin <ID>` | 创建会话，自动注入上下文 |
+| 记录开发进度 | `log "消息"` | 无需 ID，自动关联当前会话 |
+| 功能完成 | `complete <ID> -m "说明"` | 标记完成 + 自动反思 |
+| 功能中断/失败 | `fail <ID> -m "原因"` | 保留中断原因，自动分类反模式 |
+| 外部阻塞 | `fail <ID> --blocked -m "原因"` | 标记为不可继续 |
+| 查看当前任务 | `next` / `context` | 获取下一个待开发功能 |
+| 修改核心模块前 | `dev.sh impact --staged` | 预分析影响范围 |
+| 提交代码前 | `dev.sh impact` | 全量影响分析 |
+| 遇到规范问题 | `dev.sh lint` | 代码规范检查 |
+| 发现技术债 | `dev.sh garden` | 扫描管理技术债 |
+| 需要记录决策 | `remember "主题" "原因"` | 沉淀设计决策 |
+| 完成/失败后反思 | `learn --category X --lesson "..."` | 记录经验教训 |
+| 项目健康检查 | `doctor` | 一键诊断 |
+| 查看规则进化建议 | `evolve` | 扫描教训，建议新规则 |

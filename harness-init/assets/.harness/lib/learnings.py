@@ -7,39 +7,16 @@
 """
 
 import json
-import os
-import tempfile
 from collections import Counter
 from datetime import datetime
-from pathlib import Path  # noqa: F401 — preserved for future use
 
 from .core import C, HARNESS_DIR, MEMORY_DIR, LOCK_FILE
+from .atomic_io import safe_write_json
 
 LEARNINGS_FILE = MEMORY_DIR / "learnings.json"
 MAX_LEARNINGS = 100
 MIN_CONFIDENCE_INJECT = 6
 MAX_INJECT_COUNT = 5
-
-
-def _atomic_write_json(filepath, data):
-    """原子写入 JSON 文件：写临时文件再 rename，避免半写状态。"""
-    MEMORY_DIR.mkdir(exist_ok=True)
-    tmp_path = None
-    try:
-        with tempfile.NamedTemporaryFile(
-            mode='w', dir=filepath.parent, suffix='.tmp',
-            delete=False, encoding='utf-8'
-        ) as tmp:
-            json.dump(data, tmp, ensure_ascii=False, indent=2)
-            tmp.write('\n')
-            tmp.flush()
-            os.fsync(tmp.fileno())
-            tmp_path = tmp.name
-        os.replace(tmp_path, str(filepath))
-    except Exception:
-        if tmp_path and os.path.exists(tmp_path):
-            os.unlink(tmp_path)
-        raise
 
 
 def _load_learnings():
@@ -94,7 +71,7 @@ def cmd_learn(args):
                 entries = entries[-MAX_LEARNINGS:]
 
             data['entries'] = entries
-            _atomic_write_json(LEARNINGS_FILE, data)
+            safe_write_json(LEARNINGS_FILE, data)
             print(f"{C.G}✓ 教训已记录: {args.lesson}{C.N}")
         finally:
             fcntl.flock(lock_fd, fcntl.LOCK_UN)
@@ -185,18 +162,32 @@ def cmd_evolve(_args):
     print(f"  提示: 手动检查模型能力变化，决定是否简化 prompt")
 
 
-def inject_learnings_to_stdout():
-    """在 cmd_begin 中调用，将最近教训输出到 stdout（只读）。"""
+def inject_learnings_to_stdout(category_filter=None):
+    """在 cmd_begin 中调用，将最近教训输出到 stdout（只读）。
+
+    Args:
+        category_filter: 可选，优先筛选匹配 category 的教训。
+
+    Returns:
+        注入的教训数量。
+    """
     if not LEARNINGS_FILE.exists():
-        return
+        return 0
 
     try:
         with open(LEARNINGS_FILE, 'r', encoding='utf-8') as f:
             data = json.load(f)
         entries = data.get('entries', [])
 
-        # 按时间倒序，过滤 confidence >= 6，取最近 5 条
+        # 按时间倒序，过滤 confidence >= 6
         qualified = [e for e in entries if e.get('confidence', 0) >= MIN_CONFIDENCE_INJECT]
+
+        # 如果有 category 过滤，优先匹配的排前面
+        if category_filter:
+            matched = [e for e in qualified if e.get('category') == category_filter]
+            others = [e for e in qualified if e.get('category') != category_filter]
+            qualified = matched + others
+
         recent = sorted(qualified, key=lambda e: e.get('ts', ''), reverse=True)[:MAX_INJECT_COUNT]
 
         if recent:
@@ -207,5 +198,7 @@ def inject_learnings_to_stdout():
                 if ctx:
                     print(f"    Context: {ctx[:80]}")
             print(f"--- END LEARNINGS ---")
+            return len(recent)
+        return 0
     except (json.JSONDecodeError, IOError):
-        pass
+        return 0
